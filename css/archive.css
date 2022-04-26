@@ -1,0 +1,11 @@
+.nav-item-archive button {
+    font-weight: 600;
+    color: var(--text-highlight);
+}
+
+.archive-post {
+    background-color: white;
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 1rem;
+}

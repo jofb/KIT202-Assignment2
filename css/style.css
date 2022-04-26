@@ -1,0 +1,59 @@
+/* Global css file */
+
+/* Variables */
+:root {
+    --font-stack: "Poppins", sans-serif;
+    --shadow: #00000077 0 0.5rem 1rem;
+
+    /* Old Colours */
+    /* --button-green: rgb(62, 163, 71);
+    --button-green-light: rgb(64, 211, 76);
+    --button-red: rgb(194, 53, 53);
+    --button-red-light: rgb(247, 77, 77); */
+
+    --button-green: rgb(22, 155, 82);
+    --button-green-light: rgb(50, 206, 133);
+    --text-highlight: rgb(255, 218, 52);
+    --main-gradient: linear-gradient(
+        90deg,
+        rgb(48, 212, 139) 0%,
+        rgb(39, 83, 83) 50%,
+        rgb(40, 161, 231) 100%
+    );
+}
+
+/* Margin resets */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-stack);
+}
+
+main {
+    width: 80%;
+    max-width: 1300px; /*Larger resolutions such as 1440p have very wide blog posts
+                         so this is here to limit maximum width of the page contents.*/
+    margin: 0 auto;
+    padding: 1.25rem;
+}
+
+article {
+    background-color: white;
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+}
+
+body {
+    background: lightgray;
+    min-height: 100vh;
+}
+
+@media (max-width: 630px) {
+    main {
+        width: 100%;
+        padding: 1.25rem 0;
+    }
+}

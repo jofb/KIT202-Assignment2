@@ -1,0 +1,81 @@
+.nav-item-index button {
+    font-weight: 600;
+    color: var(--text-highlight);
+}
+
+.blog-post {
+    display: flex;
+    justify-content: space-between;
+    /*This forces the image to the far-right of the post in cases where the body of a post is too short*/
+}
+
+.blog-post h2 {
+    font-size: 2rem;
+    font-weight: 600;
+}
+.blog-post h3 {
+    font-weight: 700;
+}
+
+.blog-post p {
+    text-align: justify;
+}
+
+.blog-post-text {
+    padding-right: 2rem;
+    padding-bottom: 0;
+}
+
+.blog-post-image {
+    box-shadow: var(--shadow);
+    border-radius: 1rem;
+    max-width: 13rem;
+    height: auto;
+}
+
+.create-post-button {
+    border: none;
+    border-radius: 1rem;
+
+    cursor: pointer;
+
+    color: white;
+    font-size: 20px;
+    background-color: rgb(0, 145, 101);
+
+    padding: 1rem 1.3rem;
+
+    margin: 0 1rem;
+
+    box-shadow: var(--shadow);
+}
+
+.create-post-icon {
+    width: 32px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.create-post-button:hover {
+    background-color: rgb(90, 219, 170);
+    transition: 0.15s ease-in-out;
+}
+
+.create-post-button:active {
+    background-color: rgb(26, 94, 66);
+}
+
+@media (max-width: 1100px) {
+    .blog-post {
+        flex-direction: column;
+    }
+
+    .blog-post-text {
+        padding-right: 0;
+        padding-bottom: 2rem;
+    }
+
+    .blog-post-image {
+        margin: auto;
+    }
+}

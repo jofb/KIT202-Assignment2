@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home</title>
+        <!-- Font load -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&family=Poppins:wght@100;300;400;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="shortcut icon"
+            href="images/camera.png"
+            type="image/x-icon"
+        />
+
+        <!-- Stylesheets -->
+        <link rel="stylesheet" href="css/navbar.css" />
+        <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="css/index.css" />
+
+        <script src="js/navbar.js" defer></script>
+    </head>
+    <body>
+        <div class="navbar-title-container">
+            <h1 class="navbar-title">Movie Blog</h1>
+        </div>
+        <nav class="navbar">
+            <div class="nav-mobile-menu-container" onclick="showMenu()">
+                <img src="images/bars.png" class="nav-mobile-menu" alt="" />
+            </div>
+            <ul class="nav-items">
+                <li class="nav-item nav-item-index">
+                    <button onclick="location.href='index.html'">Home</button>
+                </li>
+                <li class="nav-item nav-item-about">
+                    <button onclick="location.href='about.html'">About</button>
+                </li>
+                <li class="nav-item nav-item-archive">
+                    <button onclick="location.href='archive.html'">
+                        Archive
+                    </button>
+                </li>
+                <li class="nav-item nav-item-login">
+                    <button onclick="location.href='login.html'">Login</button>
+                </li>
+            </ul>
+        </nav>
+        <!-- Blog posts in reverse chronological order -->
+
+        <main class="blog-posts">
+            <!-- found the 'button onclick' part online not sure if this is the best/normal way -->
+            <button
+                class="create-post-button"
+                onclick="window.location.href = 'create.html';"
+            >
+                <img
+                    class="create-post-icon"
+                    src="images/pen-paper-icon.png"
+                />Create Post
+            </button>
+
+            <article class="blog-post">
+                <div class="blog-post-text">
+                    <h2>The Batman</h2>
+                    <h3>22nd March 2022</h3>
+                    <p>
+                        A new take on the dark knight, Robert Pattinson had big
+                        shoes to fill following the Dark Knight Trilogy but made
+                        the role his own. A much darker Gotham helps to immerse
+                        the viewer into the city, with a chilling villain in
+                        Paul Danos' Riddler leaving viewers on the edge of their
+                        seat. The climax of the film was satisfying and built up
+                        a world I wanted to see more of, leaving the door open
+                        for potenital sequels. 9/10
+                    </p>
+                </div>
+                <img class="blog-post-image" src="images/batman-poster.jpg" />
+            </article>
+
+            <article class="blog-post">
+                <div class="blog-post-text">
+                    <h2>The Matrix: Resurrections</h2>
+                    <h3>26th December 2021</h3>
+                    <p>
+                        A highly unexpected return to the Matrix franchise,
+                        featuring the return of Keanu Reeves and Carrie-Anne
+                        Moss. This film reminds us why the original was an
+                        instant hit, but only through inferior rehashes of
+                        classic moments and action setpieces from The Matrix 1.
+                        Everything that made The Matrix unique and mind-blowing
+                        was made bland and formulaic in The Matrix:
+                        Resurrections, from the martial arts choerography to the
+                        visual effects, to the attempt to portray Agent Smith
+                        without Hugo Weaving. This said, fans of the deeper lore
+                        of The Matrix 2 and 3 may have a reason to watch. 3.5/10
+                    </p>
+                </div>
+                <img class="blog-post-image" src="images/matrix4-poster.jpg" />
+            </article>
+
+            <article class="blog-post">
+                <div class="blog-post-text">
+                    <h2>Venom: Let There Be Carnage</h2>
+                    <h3>25th November 2021</h3>
+                    <p>
+                        Tom Hardy hams it up as both Eddie Brock and his alien
+                        buddy/roommate/parasite Venom. While it is a shorter
+                        sequel to 'Venom', it manages to fit in more action
+                        sequences and comedic scenes. Carnage was portrayed
+                        about as well as you can expect from a PG-13 adaptaion
+                        of the character. Overall an enjoyable movie that
+                        doesn't push the boundaries, but doesn't fall too short
+                        either. 7/10
+                    </p>
+                </div>
+                <img class="blog-post-image" src="images/venom2-poster.jpg" />
+            </article>
+
+            <article class="blog-post">
+                <div class="blog-post-text">
+                    <h2>No Time To Die</h2>
+                    <h3>10th October 2021</h3>
+                    <p>
+                        One of the most acclaimed film series of all time
+                        delivered a closing chapter to Daniel Craigs' James Bond
+                        portrayal. While it feels like a classic Bond film with
+                        the pacing and cinematography, the ending was a suprise
+                        yet felt inevitable as the movie progressed. As per, the
+                        stakes were high for Bond but the supporting characters
+                        added an extra layer in his strive to succeed against
+                        the odds. A great finale for Craig in the role and I am
+                        interested to see what the future holds for 007. 8.5/10
+                    </p>
+                </div>
+                <img class="blog-post-image" src="images/bond-poster.jpg" />
+            </article>
+        </main>
+    </body>
+</html>

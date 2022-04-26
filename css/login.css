@@ -1,0 +1,72 @@
+.nav-item-login button {
+    font-weight: 600;
+    color: var(--text-highlight);
+}
+
+main {
+    background-color: none;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}
+.form-title {
+    font-size: 3rem;
+}
+
+form {
+    margin: 0.5rem;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    padding-top: 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+}
+input {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+    padding: 0.4rem;
+    border-radius: 0.3rem;
+    min-width: 17rem;
+}
+.login-submit {
+    border: none;
+    padding: 0.4rem 1rem;
+    background: var(--button-green);
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+}
+
+.login-submit:hover {
+    background: var(--button-green-light);
+    box-shadow: var(--shadow);
+    transition: 0.2s ease-in-out;
+}
+
+.register-button {
+    font-size: 1rem;
+    border: none;
+    padding: 0.4rem 1rem;
+    background: rgb(49, 70, 78);
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+    border: transparent 3px solid;
+}
+
+.register-button:hover {
+    background: var(--button-green-light);
+    background: rgb(93, 108, 122);
+    box-shadow: var(--shadow);
+    transition: 0.2s ease-in-out;
+}
+
+.password-policy {
+    color: gray;
+    font-size: 0.6rem;
+    font-weight: 600;
+}

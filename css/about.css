@@ -1,0 +1,62 @@
+.nav-item-about button {
+    font-weight: 600;
+    color: var(--text-highlight);
+}
+
+.about-responses {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    grid-auto-flow: row;
+}
+
+.about-response-item {
+    background-color: white;
+    margin: 0;
+    padding: 1rem;
+    border-radius: 1rem;
+
+    grid-column: span 2;
+}
+.about-response-theme {
+    grid-column: span 1;
+}
+
+.about-response-student {
+    text-align: center;
+    grid-column: span 3;
+}
+.about-response-student span {
+    font-weight: 300;
+}
+
+.about-response-references {
+    grid-row: span 2;
+    grid-column: span 1;
+}
+
+.about-response-references h3 {
+    text-decoration: underline;
+    font-weight: 500;
+}
+.about-response-references a {
+    display: list-item;
+    list-style: none;
+    color: rgb(23, 89, 211);
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 2rem;
+}
+
+h1 {
+    font-size: 1.6rem;
+}
+@media (max-width: 800px) {
+    .about-response-item {
+        grid-column: span 3;
+    }
+    .about-response-references {
+        text-align: center;
+        grid-row-start: 5;
+    }
+}

@@ -1,0 +1,149 @@
+.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background: var(--main-gradient);
+    color: white;
+    box-shadow: #00000057 0 0.75rem 0.6rem;
+}
+.navbar-title-container {
+    text-align: center;
+    background: var(--main-gradient);
+    color: white;
+}
+.navbar-title {
+    font-size: 3rem;
+    display: inline;
+}
+.nav-mobile-menu {
+    display: none;
+}
+
+.nav-items {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    list-style: none;
+    text-decoration: none;
+}
+.nav-item {
+    margin: 0.5rem 0;
+    text-align: center;
+
+    /* Reel button setup */
+    background-image: url("../images/reel-button.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 8rem;
+
+    display: inline-block;
+    position: relative;
+}
+/* Nav button animation */
+/* Code from https://www.30secondsofcode.org/css/s/hover-underline-animation
+    with some modifications */
+.nav-item::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transform-origin: bottom left;
+    transition: transform 0.25s ease-in-out;
+    z-index: -1;
+}
+.nav-item:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+.nav-item::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 100%;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-in-out;
+    z-index: -1;
+}
+.nav-item:hover::before {
+    transform: scaleX(1);
+    transform-origin: bottom right;
+}
+
+.nav-item:hover {
+    color: black;
+    transition: 0.3s ease-in-out;
+}
+/* Home button is left, login button is right */
+.nav-item-index {
+    background-image: url("../images/reel-button-left.png");
+}
+.nav-item-login {
+    background-image: url("../images/reel-button-right.png");
+}
+.nav-item button {
+    cursor: pointer;
+    color: inherit;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    padding: 1.5rem 1rem;
+    font-weight: 300;
+    width: 100%;
+}
+
+/* Some messy media queries */
+
+@media (max-width: 540px) {
+    .nav-mobile-menu-container {
+        padding-top: 1rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .nav-mobile-menu-container:hover {
+        background: var(--text-highlight) !important;
+        cursor: pointer;
+    }
+    .nav-mobile-menu {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 3rem;
+        color: white;
+        width: 3rem;
+        margin-bottom: 1rem;
+    }
+    .nav-item {
+        background: none;
+        margin: 0;
+        width: 100%;
+    }
+    .nav-item button {
+        padding: 1rem 0;
+        letter-spacing: 0.3rem;
+        text-transform: uppercase;
+        font-weight: 300;
+    }
+    .nav-item:active {
+        background: white;
+    }
+    .nav-items {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+@media (min-width: 540px) {
+    .nav-items {
+        display: flex !important;
+    }
+}
