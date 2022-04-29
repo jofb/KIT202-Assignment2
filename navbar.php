@@ -1,0 +1,21 @@
+<?php
+echo "<div class=\"navbar-title-container\">";
+echo "<h1 class=\"navbar-title\">Movie Blog</h1>";
+echo "</div>";
+echo "<nav class=\"navbar\">";
+echo "<div class=\"nav-mobile-menu-container\" onclick=\"showMenu()\">";
+echo "<img src=\"images/bars.png\" class=\"nav-mobile-menu\" />";
+echo "</div>";
+echo "<ul class=\"nav-items\">";
+echo "<li class=\"nav-item nav-item-index\">";
+echo "<button onclick=\"location.href='index.php'\">Home</button>";
+echo "</li>";
+echo "<li class=\"nav-item nav-item-about\">";
+echo "<button onclick=\"location.href='about.php'\">About</button>";
+echo "</li>";
+echo "<li class=\"nav-item nav-item-archive\">";
+echo "<button onclick=\"location.href='archive.php'\">Archive</button>";
+echo "</li>";
+echo "<li class=\"nav-item nav-item-login\">";
+echo "<button onclick=\"location.href='login.php'\">Login</button>";
+echo "</li></ul></nav>";

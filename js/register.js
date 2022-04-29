@@ -48,7 +48,7 @@ function validateLogin(e) {
     else {
         errorMessage('');
         console.log('successful validation');
-        location.href="index.html";
+        location.href="index.php";
         return true;
     }
     return false;
@@ -95,7 +95,7 @@ function validateRegister(e) {
     else {
         errorMessage('');
         console.log('successful validation');
-        location.href="index.html";
+        location.href="index.php";
         return true;
     }
     return false;
