@@ -23,24 +23,27 @@
 <body>
     <?php
     require "navbar.php";
+    require "dbconn.php";
     ?>
     <main class="archive-posts">
-        <article class="archive-post">
-            <h2>Shrek Forever After</h2>
-            <h3>17th June 2010</h3>
-        </article>
-        <article class="archive-post">
-            <h2>Shrek the Third</h2>
-            <h3>18th May 2007</h3>
-        </article>
-        <article class="archive-post">
-            <h2>Shrek 2</h2>
-            <h3>17th June 2004</h3>
-        </article>
-        <article class="archive-post">
-            <h2>Shrek</h2>
-            <h3>21st June 2001</h3>
-        </article>
+
+    <?php
+    $query = "SELECT title, archived,
+    DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
+    from blogPost WHERE archived = \"1\"";
+
+    $result = $conn->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "<article class=\"archive-post\">";
+            echo "<h2>" . $row["title"] . "</h2>";
+            echo "<h3>" . $row["DOB"] . "</h3>";
+            echo "</article>";
+        }
+    }
+    ?>
+        
     </main>
 </body>
 
