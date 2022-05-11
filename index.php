@@ -36,7 +36,8 @@ session_start();
         <?php
         //Select blog details where they aren't archived,
         //format date to look nice
-        $query = "SELECT title, 
+        $query = "SELECT username,
+        title, 
         post_body, 
         post_image,
         archived, 
@@ -50,6 +51,7 @@ session_start();
                 echo "<article class=\"blog-post\">";
                 echo "<div class=\"blog-post-text\">";
                 echo "<h2>" . $row["title"] . "</h2>";
+                echo "<h3>" . $row["username"] . "</h3>";
                 echo "<h3>" . $row["DOB"] . "</h3>";
                 echo "<p>" . $row["post_body"] . "</p>";
                 echo "</div>";
