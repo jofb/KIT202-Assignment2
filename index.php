@@ -34,7 +34,9 @@
         </button>
 
         <?php
-        $query = "SELECT * from blogPost WHERE archived = \"0\"";
+        $query = "SELECT title, archived, post_body, post_image,
+        DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
+        from blogPost WHERE archived = \"0\"";
 
         $result = $conn->query($query);
 
@@ -43,7 +45,7 @@
                 echo "<article class=\"blog-post\">";
                 echo "<div class=\"blog-post-text\">";
                 echo "<h2>" . $row["title"] . "</h2>";
-                echo "<h3>" . $row["post_date"] . "</h3>";
+                echo "<h3>" . $row["DOB"] . "</h3>";
                 echo "<p>" . $row["post_body"] . "</p>";
                 echo "</div>";
                 echo "<img class=\"blog-post-image\" src=\"" . $row["post_image"] . "\">";
