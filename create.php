@@ -27,14 +27,14 @@
     <main>
         <article class="post-creation">
             <h1>Create post</h1>
-            <form name="create-form">
+            <form name="create-form" method="post" action="create_post.php">
                 <label for="post-title">Title (70 characters maximum):</label>
                 <br />
-                <input type="text" id="post-title" maxlength="70" size="40" onchange="updateTitle()" required />
+                <input type="text" id="post-title" name="post-title" maxlength="70" size="40" onchange="updateTitle()" required />
                 <br />
 
                 <label for="post-body">Body:</label> <br />
-                <textarea class="post-body" id="post-body" rows="15" cols="100" onchange="updatePostBody()" required></textarea>
+                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" onchange="updatePostBody()" required></textarea>
                 <br />
 
                 <div class="buttons">
@@ -44,6 +44,7 @@
                 </div>
             </form>
         </article>
+
 
         <article class="post-preview">
             <div class="text-preview">
