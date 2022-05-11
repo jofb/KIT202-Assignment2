@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,12 +37,12 @@
 
                 <h1>Changes made to home page to replace the placeholder posts with posts from database.</h1>
                 <p>
-                    Our group made a create_post.php file that 
+                    Our group made a create_post.php file that
                 </p>
             </article>
             <article class="about-response-item about-response-password">
                 <h1> HTTP method used to submit the login and registration data to the server and explain why you
-chose the method you did.</h1>
+                    chose the method you did.</h1>
                 <p>
                     .........
                 </p>
@@ -98,7 +102,7 @@ chose the method you did.</h1>
 
                     Liking
 
-                .................
+                    .................
                 </p>
             </article>
 
