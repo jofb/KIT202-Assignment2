@@ -100,5 +100,3 @@ function validateRegister(e) {
     }
     return false;
 }
-
-
