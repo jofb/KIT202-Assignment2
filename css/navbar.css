@@ -20,6 +20,12 @@
 .nav-mobile-menu {
     display: none;
 }
+.navbar-username {
+    font-weight: 500;
+}
+.navbar-username-container {
+    font-weight: 200;
+}
 
 .nav-items {
     display: flex;

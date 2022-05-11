@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +17,9 @@
     <link rel="shortcut icon" href="images/camera.png" type="image/x-icon" />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/navbar.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/navbar.css?ts=<?= time() ?>" />
+    <link rel="stylesheet" href="css/style.css?ts=<?= time() ?>" />
+    <link rel="stylesheet" href="css/login.css?ts=<?= time() ?>" />
 
     <script src="js/navbar.js" defer></script>
 </head>
@@ -25,7 +29,7 @@
     require "navbar.php";
     ?>
     <main>
-        <form class="login-form" name="register-login-form" novalidate>
+        <form method="POST" action="login_user.php" class="login-form" name="register-login-form" novalidate>
             <h1 class="form-title">Login</h1>
             <!-- Register email -->
             <input type="email" name="email" id="email" placeholder="Email" hidden />
@@ -45,6 +49,7 @@
                 No Account? Register Here
             </button>
         </form>
+
     </main>
 
     <script src="js/register.js"></script>

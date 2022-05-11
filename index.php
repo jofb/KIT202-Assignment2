@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +16,9 @@
     <link rel="shortcut icon" href="images/camera.png" type="image/x-icon" />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/navbar.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/navbar.css?ts=<?= time() ?>" />
+    <link rel="stylesheet" href="css/style.css?ts=<?= time() ?>" />
+    <link rel="stylesheet" href="css/index.css?ts=<?= time() ?>" />
 
     <script src="js/navbar.js" defer></script>
 </head>
@@ -25,16 +28,18 @@
     <?php
     require "navbar.php";
     require "dbconn.php";
-
-    //Need to do username here
     ?>
     <main class="blog-posts">
         <button class="create-post-button" onclick="window.location.href = 'create.php';">
             <img class="create-post-icon" src="images/pen-paper-icon.png" />Create Post
         </button>
-
         <?php
-        $query = "SELECT title, archived, post_body, post_image,
+        //Select blog details where they aren't archived,
+        //format date to look nice
+        $query = "SELECT title, 
+        post_body, 
+        post_image,
+        archived, 
         DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
         from blogPost WHERE archived = \"0\"";
 

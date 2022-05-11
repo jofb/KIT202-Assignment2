@@ -13,9 +13,9 @@
     <link rel="shortcut icon" href="images/camera.png" type="image/x-icon" />
 
     <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/navbar.css" />
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/about.css" />
+    <link rel="stylesheet" href="css/navbar.css?ts=<?= time() ?>" />
+    <link rel="stylesheet" href="css/style.css?ts=<?= time() ?>" />
+    <link rel="stylesheet" href="css/about.css?ts=<?= time() ?>" />
 
     <script src="js/navbar.js" defer></script>
 </head>
