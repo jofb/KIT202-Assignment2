@@ -27,28 +27,26 @@
     <main class="about-container">
         <section class="about-responses">
             <article class="about-response-item about-response-theme">
-                <h1>The Theme</h1>
+
+
+
+
+                <h1>Changes made to home page to replace the placeholder posts with posts from database.</h1>
                 <p>
-                    The theme our group chose for our blog was movie
-                    reviews.
+                    Our group made a create_post.php file that 
                 </p>
             </article>
             <article class="about-response-item about-response-password">
-                <h1>Password Policy</h1>
+                <h1> HTTP method used to submit the login and registration data to the server and explain why you
+chose the method you did.</h1>
                 <p>
-                    The password policy for our blog requires a minimum
-                    password length of 8 characters including at least one
-                    special character, one number, and atleast one
-                    uppercase/lowercase letter.
+                    .........
                 </p>
             </article>
             <article class="about-response-item about-response-registration">
-                <h1>The Registration Form</h1>
+                <h1> Explain how user roles are handled on your blog and how pages are restricted to users of the appropriate role.</h1>
                 <p>
-                    The login form is changed using Javascript. By default
-                    the additional form elements such as email and confirm
-                    password are hidden. They are enabled through the script
-                    and the register button.
+                    ..........
                 </p>
             </article>
             <!-- References -->
@@ -94,15 +92,13 @@
                 </p>
             </article>
             <article class="about-response-item about-response-functionality">
-                <h1>Additional Functionality</h1>
+                <h1>Additional Features added to the blog</h1>
                 <p>
-                    Sticky navigation was added to the navbar for ease of access when a user has scrolled down a page.
-                    Navbar buttons were decorated to fit our movie theme.<br><br>
+                    Commenting
 
-                    The Create Post page features a real-time preview of how your post will appear once submitted, with an accurate date and placeholder image.<br><br>
+                    Liking
 
-                    The blog is responsive to different screen sizes. Posts each feature an image to the right of their body text, or beneath the body text when the
-                    screen width is below a certain threshold. The about page changes its grid layout on smaller screen sizes.
+                .................
                 </p>
             </article>
 
