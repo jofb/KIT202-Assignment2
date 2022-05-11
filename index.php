@@ -42,7 +42,8 @@ session_start();
         post_image,
         archived, 
         DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
-        from blogPost WHERE archived = \"0\"";
+        from blogPost WHERE archived = \"0\" 
+        ORDER BY post_date DESC;";
 
         $result = $conn->query($query);
 
