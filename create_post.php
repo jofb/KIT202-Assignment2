@@ -1,12 +1,11 @@
 <?php
     session_start();
-    $_SESSION["username"] = "admin";
     
     require "dbconn.php";
 
-    $newTitle = $_POST["post-title"];
-    $newPost = $_POST["post-body"];
-    $newAuthor = $_SESSION["username"];
+    $newTitle = htmlspecialchars($_POST["post-title"]);
+    $newPost = $_SESSION["username"];
+    $newAuthor = htmlspecialchars($_SESSION["username"]);
     
     $command = "INSERT INTO blogPost (username, title, post_body)
     VALUES ('$newAuthor', '$newTitle', '$newPost');";
