@@ -43,13 +43,26 @@ session_start();
                 special character, number, lowercase letter, uppercase
                 letter
             </p>
-            <p class="error-message" style="color: red"></p>
+
+            <!-- Error message -->
+            <p class="error-message" style="color: red">
+                <?php
+                if (isset($_GET["pass"]) && $_GET["pass"] == "failed") {
+                    echo "Password does not match";
+                } else if (isset($_GET["user"]) && $_GET["user"] == "not_found") {
+                    echo "That username does not exist";
+                }
+                ?>
+            </p>
+
             <input type="submit" value="Sign In" class="login-submit" name="submit" />
             <button class="register-button" type="button" name="registerButton">
                 No Account? Register Here
             </button>
         </form>
+        <?php
 
+        ?>
     </main>
 
     <script src="js/register.js"></script>

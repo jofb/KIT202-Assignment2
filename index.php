@@ -30,10 +30,16 @@ session_start();
     require "dbconn.php";
     ?>
     <main class="blog-posts">
-        <button class="create-post-button" onclick="window.location.href = 'create.php';">
-            <img class="create-post-icon" src="images/pen-paper-icon.png" />Create Post
-        </button>
         <?php
+
+
+        // //hide create post button if role != author
+        if (isset($_SESSION["role"]) && $_SESSION["role"] == "Author") {
+            echo "<button class=\"create-post-button\" onclick=\"window.location.href = 'create.php';\">";
+            echo "<img class=\"create-post-icon\" src=\"images/pen-paper-icon.png\" />Create Post";
+            echo "</button>";
+        }
+
         //Select blog details where they aren't archived,
         //format date to look nice
         $query = "SELECT username,

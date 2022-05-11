@@ -37,7 +37,7 @@ registerBtn.addEventListener('click', event => {
 //Returns true only if both a password and username are entered
 //Upon validation returns to home page
 function validateLogin(e) {
-    e.preventDefault();
+    //e.preventDefault();
     console.log('login validation');
     if(!form.username.value) {
         errorMessage('Please enter your username');

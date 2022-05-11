@@ -24,18 +24,8 @@ function updateDate() {
     let day = String(d.getDate());
     let month = monthArray[d.getMonth()];
     let year = d.getFullYear();
-    let daySuffix = 'th';
-    if (day.charAt(day.length - 1) == 3) {
-        daySuffix = 'rd';
-    }
-    else if (day.charAt(day.length - 1) == 2) {
-        daySuffix = 'nd';
-    }
-    else if (day.charAt(day.length - 1) == 1) {
-        daySuffix = 'st';
-    }
 
-    let dateString = `${day}${daySuffix} ${month} ${year}`;
+    let dateString = `${day} ${month} ${year}`;
     datePreview.textContent = dateString;
 }
 
