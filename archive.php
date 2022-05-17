@@ -28,6 +28,10 @@ session_start();
     <?php
     require "navbar.php";
     require "dbconn.php";
+
+    if (!isset($_SESSION["role"]) || $_SESSION["role"] == "Visitor") {
+        header('Location: index.php');
+    }
     ?>
     <main class="archive-posts">
 

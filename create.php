@@ -27,6 +27,10 @@ session_start();
 <body>
     <?php
     require "navbar.php";
+
+    if (!isset($_SESSION["role"]) || $_SESSION["role"] != "Author") {
+        header('Location: index.php');
+    }
     ?>
     <main>
         <article class="post-creation">
