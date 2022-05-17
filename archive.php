@@ -1,7 +1,3 @@
-<?php
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +16,7 @@ session_start();
     <link rel="stylesheet" href="css/navbar.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/style.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/archive.css?ts=<?= time() ?>" />
-
+    
     <script src="js/navbar.js" defer></script>
 </head>
 
@@ -34,7 +30,10 @@ session_start();
     <?php
     $query = "SELECT title, archived,
     DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
-    from blogPost WHERE archived = \"1\"";
+    from blogPost WHERE archived = \"1\"
+    ORDER BY post_date DESC;";
+
+
 
     $result = $conn->query($query);
 
