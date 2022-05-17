@@ -47,9 +47,10 @@ session_start();
         post_body, 
         post_image,
         archived, 
-        DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
+        DATE_FORMAT(post_date, \"%d %M %Y\") AS 'date'
         from blogPost WHERE archived = \"0\" 
         ORDER BY post_date DESC;";
+
 
         $result = $conn->query($query);
 
@@ -59,7 +60,7 @@ session_start();
                 echo "<div class=\"blog-post-text\">";
                 echo "<h2>" . $row["title"] . "</h2>";
                 echo "<h3>" . $row["username"] . "</h3>";
-                echo "<h3>" . $row["DOB"] . "</h3>";
+                echo "<h3>" . $row["date"] . "</h3>";
                 echo "<p>" . $row["post_body"] . "</p>";
                 echo "</div>";
                 echo "<img class=\"blog-post-image\" src=\"" . $row["post_image"] . "\">";

@@ -23,7 +23,7 @@ echo "<li class=\"nav-item nav-item-about\">";
 echo "<button onclick=\"location.href='about.php'\">About</button>";
 echo "</li>";
 //if visitor role hide this
-if (isset($_SESSION["role"]) && $_SESSION["role"] != "visitor") {
+if (isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
     echo "<li class=\"nav-item nav-item-archive\">";
     echo "<button onclick=\"location.href='archive.php'\">Archive</button>";
     echo "</li>";

@@ -44,7 +44,7 @@ session_start();
 
                 <label for="post-image">Movie Poster URL:</label>
                 <br />
-                <input type="text" id="post-image" name="post-image" maxlength="500" size="60" onchange="updateImage()"/>
+                <input type="text" id="post-image" name="post-image" maxlength="500" size="60" onchange="updateImage()" />
                 <br />
 
                 <div class="buttons">
@@ -59,7 +59,12 @@ session_start();
                 <h2 id="title-preview">
                     This is a preview of your new post
                 </h2>
-                <h3 id="author-preview"><?php if (isset($_SESSION["username"])) { echo $_SESSION["username"];} ?></h3>
+                <h3 id="author-preview">
+                    <?php if (isset($_SESSION["username"])) {
+                        echo $_SESSION["username"];
+                    }
+                    ?>
+                </h3>
                 <h3 id="date-preview">32nd Septober 2008</h3>
                 <p id="body-preview">
                     This is the body of your post. Lorem ipsum dolor sit
@@ -78,7 +83,7 @@ session_start();
                 </p>
             </div>
             <!--<div class="placeholder-image"></div>-->
-            <img class="image-preview" id="image-preview" src="https://s.studiobinder.com/wp-content/uploads/2019/06/Movie-Poster-Template-Movie-Credits-StudioBinder.jpg"/>
+            <img class="image-preview" id="image-preview" src="https://s.studiobinder.com/wp-content/uploads/2019/06/Movie-Poster-Template-Movie-Credits-StudioBinder.jpg" />
         </article>
     </main>
 
