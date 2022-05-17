@@ -29,6 +29,13 @@ textarea {
     padding-right: 2rem;
 }
 
+.image-preview {
+    box-shadow: var(--shadow);
+    border-radius: 1rem;
+    max-width: 13rem;
+    height: auto;
+}
+
 .placeholder-image {
     box-shadow: var(--shadow);
     /*border: 1px solid black;*/
@@ -91,7 +98,7 @@ textarea {
         padding-bottom: 2rem;
     }
 
-    .placeholder-image {
+    .image-preview {
         margin: auto;
     }
 }
