@@ -18,6 +18,8 @@ registerBtn.addEventListener('click', event => {
     document.querySelector(".form-title").innerHTML = "Register"; 
     document.title = "Register";
 
+    form.setAttribute("action", "register_user.php");
+
 
     document.querySelector(".password-policy").hidden = false;
     form.email.hidden = false;
@@ -67,7 +69,7 @@ function validateLogin(e) {
 //Upon validation, returns to home page
 
 function validateRegister(e) {
-    e.preventDefault();
+    //e.preventDefault();
     console.log(form.email.value);
 
     const emailRegex = /^(\w+@.+[A-Za-z]+\.[A-Za-z]+)$/;
