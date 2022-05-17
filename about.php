@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,13 +38,13 @@
                 <h1>Changes made to home page to replace the placeholder posts with posts from database.</h1>
                 <p>
                     Our group made a create_post.php file that inserts new blog posts into the database and will
-                    display them in reverse chronological order on the Home page. When a new post is sumbitted, the 
+                    display them in reverse chronological order on the Home page. When a new post is sumbitted, the
                     oldest post on the Home Page is archived.
                 </p>
             </article>
             <article class="about-response-item about-response-password">
                 <h1> HTTP method used to submit the login and registration data to the server and explain why you
-chose the method you did.</h1>
+                    chose the method you did.</h1>
                 <p>
                     .........
                 </p>
@@ -99,9 +103,9 @@ chose the method you did.</h1>
                     Authors and Members are able to view and comment on posts on the Home page.
                     Visitors are only able to view comments........
 
-                    
 
-                .................
+
+                    .................
                 </p>
             </article>
 

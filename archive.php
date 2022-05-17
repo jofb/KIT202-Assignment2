@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,7 +20,7 @@
     <link rel="stylesheet" href="css/navbar.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/style.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/archive.css?ts=<?= time() ?>" />
-    
+
     <script src="js/navbar.js" defer></script>
 </head>
 
@@ -27,26 +31,26 @@
     ?>
     <main class="archive-posts">
 
-    <?php
-    $query = "SELECT title, archived,
+        <?php
+        $query = "SELECT title, archived,
     DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
     from blogPost WHERE archived = \"1\"
     ORDER BY post_date DESC;";
 
 
 
-    $result = $conn->query($query);
+        $result = $conn->query($query);
 
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            echo "<article class=\"archive-post\">";
-            echo "<h2>" . $row["title"] . "</h2>";
-            echo "<h3>" . $row["DOB"] . "</h3>";
-            echo "</article>";
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                echo "<article class=\"archive-post\">";
+                echo "<h2>" . $row["title"] . "</h2>";
+                echo "<h3>" . $row["DOB"] . "</h3>";
+                echo "</article>";
+            }
         }
-    }
-    ?>
-        
+        ?>
+
     </main>
 </body>
 
