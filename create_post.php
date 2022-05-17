@@ -4,14 +4,14 @@
     require "dbconn.php";
 
     $newTitle = htmlspecialchars($_POST["post-title"]);
-    $newPost = $_SESSION["username"];
-    $newAuthor = htmlspecialchars($_SESSION["username"]);
+    $newAuthor = $_SESSION["username"];
+    $newPost = htmlspecialchars($_POST["post-body"]);
     
     $command = "INSERT INTO blogPost (username, title, post_body)
     VALUES ('$newAuthor', '$newTitle', '$newPost');";
 
     if ($conn->query($command) === TRUE) {
-        echo "New post added";
+        header('Location: index.php');
     } else {
         echo "Error: " . $command . "<br>" . $conn->error;
     }

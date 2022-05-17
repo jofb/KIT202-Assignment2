@@ -55,6 +55,7 @@ session_start();
                 <h2 id="title-preview">
                     This is a preview of your new post
                 </h2>
+                <h3 id="author-preview"><?php if isset(($_SESSION["username"])) { echo $_SESSION["username"];} ?></h3>
                 <h3 id="date-preview">32nd Septober 2008</h3>
                 <p id="body-preview">
                     This is the body of your post. Lorem ipsum dolor sit
