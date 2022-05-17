@@ -31,8 +31,6 @@ session_start();
     ?>
     <main class="blog-posts">
         <?php
-
-
         // //hide create post button if role != author
         if (isset($_SESSION["role"]) && $_SESSION["role"] == "Author") {
             echo "<button class=\"create-post-button\" onclick=\"window.location.href = 'create.php';\">";

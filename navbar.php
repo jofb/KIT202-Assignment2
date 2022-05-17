@@ -5,13 +5,12 @@ echo "<h1 class=\"navbar-title\">Movie Blog</h1>";
 echo "</div>";
 echo "<nav class=\"navbar\">";
 
-echo "<h3 class=\"navbar-username-container\">Logged in as <span class=\"navbar-username\">";
+echo "<h3 class=\"navbar-username-container\">";
 if (isset($_SESSION["username"])) {
-    echo $_SESSION["username"];
-} else {
-    echo "Visitor";
+    //echo $_SESSION["username"];
+    echo "Logged in as <span class=\"navbar-username\">" . $_SESSION["username"] . "</span>";
 }
-echo "</span></h3>";
+echo "</h3>";
 echo "<div class=\"nav-mobile-menu-container\" onclick=\"showMenu()\">";
 echo "<img src=\"images/bars.png\" class=\"nav-mobile-menu\" />";
 echo "</div>";
@@ -27,8 +26,15 @@ if (isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
     echo "<li class=\"nav-item nav-item-archive\">";
     echo "<button onclick=\"location.href='archive.php'\">Archive</button>";
     echo "</li>";
+    //logout button here
+    echo "<li class=\"nav-item nav-item-login\">";
+    echo "<button onclick=\"location.href='logout.php'\">Logout</button>";
+    echo "</li></ul>";
+    echo "</nav>";
+} else {
+    //login button because they are visitor
+    echo "<li class=\"nav-item nav-item-login\">";
+    echo "<button onclick=\"location.href='login.php'\">Login</button>";
+    echo "</li></ul>";
+    echo "</nav>";
 }
-echo "<li class=\"nav-item nav-item-login\">";
-echo "<button onclick=\"location.href='login.php'\">Login</button>";
-echo "</li></ul>";
-echo "</nav>";
