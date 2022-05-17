@@ -7,8 +7,10 @@ $email = htmlspecialchars($_POST["email"]);
 $username = htmlspecialchars($_POST["username"]);
 $password = htmlspecialchars($_POST["password"]);
 
+$hashedPassword = crypt($password, '$5$shrek');
+
 //default to member role
-$values = "'$username', '$password', 'member', '$email'";
+$values = "'$username', '$hashedPassword', 'member', '$email'";
 
 $query = "INSERT INTO user (username, password, role, email) VALUES ($values);";
 

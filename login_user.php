@@ -13,7 +13,7 @@ $result = $conn->query($query);
 if ($result) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        if ($row["password"] == $password) {
+        if (password_verify($password, $row["password"])) {
             //successfully log in
             setSessionUser($row["username"], $row["role"]);
             header('Location: index.php');
