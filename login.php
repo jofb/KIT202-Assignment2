@@ -1,5 +1,44 @@
 <?php
 session_start();
+
+require "dbconn.php";
+
+$invalidLogin = false;
+
+//If username and password are in POST, try and login
+if(isset($_POST["username"]) && isset($_POST["password"])) {
+    $username = htmlspecialchars($_POST["username"]);
+    $password = htmlspecialchars($_POST["password"]);
+
+    //If authentication is successful, move to main page
+    if(authenticate($username, $password)) {
+        $_SESSION["username"] = $username;
+        header('Location: index.php');
+    } else {
+        $invalidLogin = true;
+    }
+}
+
+function authenticate($user, $pass) {
+    global $conn;
+
+    $sanitisedPass = $conn->real_escape_string($pass);
+
+    $query = "SELECT username, password, role FROM user WHERE username = '$user'";
+    $result = $conn->query($query);
+
+    if($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+
+        //if password is successfully verified, set session role and return true
+        if(password_verify($sanitisedPass, $row["password"])) {
+            $_SESSION["role"] = $row["role"];
+            return true;
+        }
+    }
+
+    return false;
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +68,7 @@ session_start();
     require "navbar.php";
     ?>
     <main>
-        <form method="POST" action="login_user.php" class="login-form" name="register-login-form" novalidate>
+        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="login-form" name="register-login-form" novalidate>
             <h1 class="form-title">Login</h1>
             <!-- Register email -->
             <input type="email" name="email" id="email" placeholder="Email" hidden />
@@ -47,11 +86,14 @@ session_start();
             <!-- Error message -->
             <p class="error-message" style="color: red">
                 <?php
-                if (isset($_GET["pass"]) && $_GET["pass"] == "failed") {
-                    echo "Password does not match";
-                } else if (isset($_GET["user"]) && $_GET["user"] == "not_found") {
-                    echo "That username does not exist";
+                if($invalidLogin) {
+                    echo "Username or Password is invalid";
                 }
+                // if (isset($_GET["pass"]) && $_GET["pass"] == "failed") {
+                //     echo "Password does not match";
+                // } else if (isset($_GET["user"]) && $_GET["user"] == "not_found") {
+                //     echo "That username does not exist";
+                // }
                 ?>
             </p>
 
