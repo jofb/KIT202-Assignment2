@@ -31,28 +31,32 @@ session_start();
     <main class="about-container">
         <section class="about-responses">
             <article class="about-response-item about-response-theme">
-
-
-
-
-                <h1>Changes made to home page to replace the placeholder posts with posts from database.</h1>
+                <h1>Home Page Changes.</h1>
                 <p>
-                    Our group made a create_post.php file that inserts new blog posts into the database and will
-                    display them in reverse chronological order on the Home page. When a new post is sumbitted, the
-                    oldest post on the Home Page is archived.
+                    -got rid of each individual post and replaced it with a for loop that loops through all blog
+                    posts in the database that have the archived tag flagged false
+                    -then we simply echo'ed out the appropriate html, replacing it with the database data as neccessary.
                 </p>
             </article>
             <article class="about-response-item about-response-password">
-                <h1> HTTP method used to submit the login and registration data to the server and explain why you
-                    chose the method you did.</h1>
+                <h1>HTTP Methods Chosen For Login/Registration</h1>
                 <p>
-                    .........
+                    -for both login and registration we used post. 
+                    -did not want the password from the form visible in the URL so GET is not appropriate here.
+                    -however did use GET when an invalid registration is performed, so that the script can retrieve the email and 
+                    username entered from the user. This makes it more convenient for the user if they enter an invalid username (one that
+                    is already taken.)
                 </p>
             </article>
             <article class="about-response-item about-response-registration">
-                <h1> Explain how user roles are handled on your blog and how pages are restricted to users of the appropriate role.</h1>
+                <h1>User Roles</h1>
                 <p>
-                    ..........
+                    -there are 2 main roles on the website: member and author. When the session is not logged in, the user is
+                    considered a visitor. 
+                    -when a user logs in we set the session role variable to their appropriate role.
+                    -At the start of every php script is a check to see if the user is allowed onto that page given their current 
+                    sessions role. if they aren't, they are returned to the home page
+                    -this prevents users from accessing pages they should not be able to
                 </p>
             </article>
             <!-- References -->
@@ -98,14 +102,17 @@ session_start();
                 </p>
             </article>
             <article class="about-response-item about-response-functionality">
-                <h1>Additional Features added to the blog</h1>
+                <h1>Additional Features Added to the Blog</h1>
                 <p>
-                    Authors and Members are able to view and comment on posts on the Home page.
-                    Visitors are only able to view comments........
+                    <b>Logout button: </b> When a user is logged into an account, the login button is replaced with a logout button, which resets the session
+                    and returns the user to the home page as a fresh visitor. </br>
+                    <b>Images: </b>When creating posts the user can submit an image URL which will be uploaded to the database and attached to the blog 
+                    post. </br>
+                    <b>Registration: </b>When a user tries to register with a username that already exists, the website 
+                    will remember the username and email entered via GET, for convenience. </br>
+                    -Commenting (?)
+                    -Liking (?)
 
-
-
-                    .................
                 </p>
             </article>
 

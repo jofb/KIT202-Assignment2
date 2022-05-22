@@ -115,7 +115,6 @@ function authenticate($user, $pass) {
     <?php 
         //If there is an invalid register, update the form with old username/email and report error
         if($invalidRegister) {
-            echo "hellrewqfrqweo";
             $user = $_GET["user"];
             $email = $_GET["email"];
             echo "
