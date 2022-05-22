@@ -4,9 +4,38 @@ session_start();
 require "dbconn.php";
 
 $invalidLogin = false;
+$invalidRegister = false;
 
+if(isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["email"])) {
+    $email = htmlspecialchars($_POST["email"]);
+    $username = htmlspecialchars($_POST["username"]);
+    $password = htmlspecialchars($_POST["password"]);
+
+    $hashedPassword = crypt($password, '$5$shrek');
+
+    //default to member role
+    $values = "'$username', '$hashedPassword', 'member', '$email'";
+
+    $query = "INSERT INTO user (username, password, role, email) VALUES ($values);";
+
+    //Handle same username case
+    try {
+        $result = $conn->query($query);
+        if ($result) {
+            //If successfully created new user
+            $_SESSION["username"] = $username;
+            $_SESSION["role"] = "member";
+            header('Location: index.php');
+        }
+    } catch(mysqli_sql_exception $e) {
+        //23000 is the sql error code for same primary key
+        if($e->getSqlState() == "23000") {
+            $invalidRegister = true;
+        }
+    }
+}
 //If username and password are in POST, try and login
-if(isset($_POST["username"]) && isset($_POST["password"])) {
+else if(isset($_POST["username"]) && isset($_POST["password"])) {
     $username = htmlspecialchars($_POST["username"]);
     $password = htmlspecialchars($_POST["password"]);
 
@@ -71,7 +100,11 @@ function authenticate($user, $pass) {
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="login-form" name="register-login-form" novalidate>
             <h1 class="form-title">Login</h1>
             <!-- Register email -->
-            <input type="email" name="email" id="email" placeholder="Email" hidden />
+            <input type="email" name="email" id="email" placeholder="Email" hidden value="<?php 
+                if(isset($_GET["email"])) { 
+                    echo $_GET["email"]; 
+                } 
+            ?>" />
             <input type="text" name="username" id="username" placeholder="Username" />
             <input type="password" name="password" id="password" placeholder="Password" />
             <!-- Register confirm passwrod -->
@@ -89,11 +122,6 @@ function authenticate($user, $pass) {
                 if($invalidLogin) {
                     echo "Username or Password is invalid";
                 }
-                // if (isset($_GET["pass"]) && $_GET["pass"] == "failed") {
-                //     echo "Password does not match";
-                // } else if (isset($_GET["user"]) && $_GET["user"] == "not_found") {
-                //     echo "That username does not exist";
-                // }
                 ?>
             </p>
 
@@ -108,6 +136,18 @@ function authenticate($user, $pass) {
     </main>
 
     <script src="js/register.js"></script>
+    <?php 
+        //If there is an invalid register, update the form with old username/email and report error
+        if($invalidRegister) {
+            $user = $_POST["username"];
+            $email = $_POST["email"];
+            echo "
+            <script> 
+            registerButtonChange(); 
+            updateRegisterForm('$user', '$email');
+            </script>";
+        }
+    ?>
 </body>
 
 </html>
