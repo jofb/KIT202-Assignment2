@@ -1,5 +1,50 @@
 <?php
 session_start();
+
+if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
+    require "dbconn.php";
+
+    $newTitle = htmlspecialchars($_POST["post-title"]);
+    $newAuthor = $_SESSION["username"];
+    $newPost = htmlspecialchars($_POST["post-body"]);
+
+    $command = "INSERT INTO blogPost (username, title, post_body)
+        VALUES ('$newAuthor', '$newTitle', '$newPost');";
+
+    if ($conn->query($command) === TRUE) {
+        updateArchivedPosts();
+        header('Location: index.php');
+    } else {
+        echo "Error: " . $command . "<br>" . $conn->error;
+    }
+
+    $conn->close();
+
+}
+
+function updateArchivedPosts()
+{
+    global $conn;
+
+    $highestTime = 0;
+    $toRemove = 0;
+
+    $postQuery = "SELECT post_id, post_date, archived from blogPost where archived = 0 ORDER BY post_date ASC";
+    $result = $conn->query($postQuery);
+
+    if ($result && $result->num_rows > 1) {
+        $row = $result->fetch_assoc();
+        $toRemove = $row["post_id"];
+        $updateQuery = "UPDATE blogPost SET archived = 1 WHERE post_id = '$toRemove';";
+        $result = $conn->query($updateQuery);
+        if ($result) {
+            echo "Updated Blog Posts";
+        } else {
+            echo "Something went wrong";
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +80,7 @@ session_start();
     <main>
         <article class="post-creation">
             <h1>Create post</h1>
-            <form name="create-form" method="post" action="create_post.php">
+            <form name="create-form" method="post" action="<?php $_SERVER["PHP_SELF"]; ?>">
                 <label for="post-title">Title (70 characters maximum):</label>
                 <br />
                 <input type="text" id="post-title" name="post-title" maxlength="70" size="40" onchange="updateTitle()" required />

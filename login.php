@@ -5,37 +5,12 @@ require "dbconn.php";
 
 $invalidLogin = false;
 $invalidRegister = false;
-
-if(isset($_POST["username"]) && isset($_POST["email"]) && isset($_POST["email"])) {
-    $email = htmlspecialchars($_POST["email"]);
-    $username = htmlspecialchars($_POST["username"]);
-    $password = htmlspecialchars($_POST["password"]);
-
-    $hashedPassword = crypt($password, '$5$shrek');
-
-    //default to member role
-    $values = "'$username', '$hashedPassword', 'member', '$email'";
-
-    $query = "INSERT INTO user (username, password, role, email) VALUES ($values);";
-
-    //Handle same username case
-    try {
-        $result = $conn->query($query);
-        if ($result) {
-            //If successfully created new user
-            $_SESSION["username"] = $username;
-            $_SESSION["role"] = "member";
-            header('Location: index.php');
-        }
-    } catch(mysqli_sql_exception $e) {
-        //23000 is the sql error code for same primary key
-        if($e->getSqlState() == "23000") {
-            $invalidRegister = true;
-        }
-    }
+if(isset($_GET["invalid"])) {
+    $invalidRegister = true;
 }
+
 //If username and password are in POST, try and login
-else if(isset($_POST["username"]) && isset($_POST["password"])) {
+if(isset($_POST["username"]) && isset($_POST["password"])) {
     $username = htmlspecialchars($_POST["username"]);
     $password = htmlspecialchars($_POST["password"]);
 
@@ -52,8 +27,9 @@ function authenticate($user, $pass) {
     global $conn;
 
     $sanitisedPass = $conn->real_escape_string($pass);
+    $sanitisedUser = $conn->real_escape_string($user);
 
-    $query = "SELECT username, password, role FROM user WHERE username = '$user'";
+    $query = "SELECT username, password, role FROM user WHERE username = '$sanitisedUser'";
     $result = $conn->query($query);
 
     if($result && $result->num_rows > 0) {
@@ -139,8 +115,9 @@ function authenticate($user, $pass) {
     <?php 
         //If there is an invalid register, update the form with old username/email and report error
         if($invalidRegister) {
-            $user = $_POST["username"];
-            $email = $_POST["email"];
+            echo "hellrewqfrqweo";
+            $user = $_GET["user"];
+            $email = $_GET["email"];
             echo "
             <script> 
             registerButtonChange(); 

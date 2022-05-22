@@ -30,6 +30,8 @@ function registerButtonChange(event) {
     document.querySelector(".form-title").innerHTML = "Register";
     document.title = "Register";
 
+    form.setAttribute("action", "register_user.php");
+
     document.querySelector(".password-policy").hidden = false;
     form.email.hidden = false;
     form.confirmPassword.hidden = false;

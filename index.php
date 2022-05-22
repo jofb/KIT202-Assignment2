@@ -31,6 +31,7 @@ session_start();
     ?>
     <main class="blog-posts">
         <?php
+
         // //hide create post button if role != author
         if (isset($_SESSION["role"]) && $_SESSION["role"] == "Author") {
             echo "<button class=\"create-post-button\" onclick=\"window.location.href = 'create.php';\">";
@@ -48,8 +49,7 @@ session_start();
         DATE_FORMAT(post_date, \"%d %M %Y\") AS 'date'
         from blogPost WHERE archived = \"0\" 
         ORDER BY post_date DESC;";
-
-
+        
         $result = $conn->query($query);
 
         if ($result && $result->num_rows > 0) {
@@ -57,7 +57,7 @@ session_start();
                 echo "<article class=\"blog-post\">";
                 echo "<div class=\"blog-post-text\">";
                 echo "<h2>" . $row["title"] . "</h2>";
-                echo "<h3>" . $row["username"] . "</h3>";
+                echo "<h3 style=\"font-weight: 300; \">" . $row["username"] . "</h3>";
                 echo "<h3>" . $row["date"] . "</h3>";
                 echo "<p>" . $row["post_body"] . "</p>";
                 echo "</div>";
