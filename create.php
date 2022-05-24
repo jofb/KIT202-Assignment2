@@ -25,9 +25,9 @@ if (isset($_GET["edit"])) {
 // If page was submitted as an action
 if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
 
-    $newTitle = htmlspecialchars($_POST["post-title"]);
+    $newTitle = htmlentities($_POST["post-title"]);
     $newAuthor = $_SESSION["username"];
-    $newPost = htmlspecialchars($_POST["post-body"]);
+    $newPost = htmlentities($_POST["post-body"]);
     if (isset($_POST["post-image"])) $newImage = $_POST["post-image"];
     
     // Editing post

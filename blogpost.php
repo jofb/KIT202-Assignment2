@@ -5,7 +5,7 @@ require "dbconn.php";
 $title;
 
 //If there is a post id in get, and the user is not a visitor, they can use this page
-if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
+if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
 
     $id = $_GET["post_id"];
 
@@ -13,12 +13,12 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
 
     $result = $conn->query($query);
 
-    if($result && $result->num_rows > 0) {
+    if ($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
         $title = $row["title"];
     } else {
-       header('Location: index.php');
+        header('Location: index.php');
     }
 } else {
     header('Location: index.php');
@@ -63,7 +63,7 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
         from blogPost WHERE post_id = '$id';";
         $result = $conn->query($query);
 
-        if($result && $result->num_rows > 0) {
+        if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
             echo "<article class=\"blog-post\">";
@@ -80,7 +80,7 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
 
             $result = $conn->query($query);
 
-            if($result && $result->num_rows > 0) {
+            if ($result && $result->num_rows > 0) {
                 echo "<article class=\"blog-post\">";
                 echo "<div class=\"blog-post-text\">";
                 echo "<h3 style=\"font-weight: 300; \">" . $row["username"] . "</h3>";
@@ -89,7 +89,6 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
                 echo "</div>";
                 echo "</article>";
             }
-
         } else {
             echo "Something went wrong here!";
             //header('Location: index.php');
