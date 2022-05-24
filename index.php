@@ -73,7 +73,7 @@ session_start();
                 }
                 if (isset($_SESSION["username"]) && $_SESSION["username"] == $row["username"]) {
                     echo "<button class=\"comments-button edit-button\"";
-                    echo "onclick=\"window.location.href = 'editpost.php?edit=" . $row["post_id"] . "'\">";
+                    echo "onclick=\"window.location.href = 'create.php?edit=" . $row["post_id"] . "'\">";
                     echo "Edit Post";
                     echo "</button";
                 }
