@@ -46,23 +46,40 @@ session_start();
         post_body, 
         post_image,
         archived, 
+        post_id,
         DATE_FORMAT(post_date, \"%d %M %Y\") AS 'date'
         from blogPost WHERE archived = \"0\" 
         ORDER BY post_date DESC;";
-        
+
         $result = $conn->query($query);
 
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<article class=\"blog-post\">";
+                echo "<div class=\"blog-post-text-button-wrapper\">";
                 echo "<div class=\"blog-post-text\">";
                 echo "<h2>" . $row["title"] . "</h2>";
                 echo "<h3 style=\"font-weight: 300; \">" . $row["username"] . "</h3>";
                 echo "<h3>" . $row["date"] . "</h3>";
                 echo "<p>" . $row["post_body"] . "</p>";
                 //comments button
-                //echo "<button style=\"margin: 1rem 0 0 0; padding: 0.5rem;\">Comments</button>";
                 echo "</div>";
+                echo "<section class=\"user-buttons-wrapper\">";
+                if (isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
+                    echo "<button class=\"comments-button\"";
+                    echo "onclick=\"window.location.href = 'blogpost.php?post_id=" . $row["post_id"] . "'\">";
+                    echo "Comments";
+                    echo "</button>";
+                }
+                if (isset($_SESSION["username"]) && $_SESSION["username"] == $row["username"]) {
+                    echo "<button class=\"comments-button edit-button\"";
+                    echo "onclick=\"window.location.href = 'editpost.php?edit=" . $row["post_id"] . "'\">";
+                    echo "Edit Post";
+                    echo "</button";
+                }
+                echo "</section>";
+                echo "</div>";
+
                 echo "<img class=\"blog-post-image\" src=\"" . $row["post_image"] . "\">";
                 echo "</article>";
             }

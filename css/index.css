@@ -21,7 +21,14 @@
     text-align: justify;
 }
 
+.blog-post-text-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+}
+
 .blog-post-text {
+    flex-grow: 1;
     padding-right: 2rem;
     padding-bottom: 0;
 }
@@ -31,6 +38,33 @@
     border-radius: 1rem;
     max-width: 13rem;
     height: auto;
+}
+
+.user-buttons-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.comments-button {
+    font-size: 1.1rem;
+    max-width: fit-content;
+    border: none;
+    padding: 0.4rem 1rem;
+    background: rgb(40, 161, 231) 100%;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+    margin: 0.5rem 0 0 0;
+}
+
+.edit-button {
+    margin: 0.5rem 0 0 0.5rem;
+}
+
+.comments-button:hover {
+    background: rgb(93, 185, 237) 100%;
+    box-shadow: #00000077 0 0.2rem 0.5rem;
+    transition: 0.2s ease-out;
 }
 
 .create-post-button {
@@ -77,5 +111,10 @@
 
     .blog-post-image {
         margin: auto;
+    }
+
+    .user-buttons-wrapper {
+        justify-content: center;
+        margin: 1rem 0;
     }
 }
