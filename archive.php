@@ -38,7 +38,7 @@ session_start();
         <?php
         $query = "SELECT title, archived,
     DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
-    from blogPost WHERE archived = \"1\"
+    from Blog_Post WHERE archived = \"1\"
     ORDER BY post_date DESC;";
 
 

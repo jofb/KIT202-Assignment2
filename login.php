@@ -29,7 +29,7 @@ function authenticate($user, $pass) {
     $sanitisedPass = $conn->real_escape_string($pass);
     $sanitisedUser = $conn->real_escape_string($user);
 
-    $query = "SELECT username, password, role FROM user WHERE username = '$sanitisedUser'";
+    $query = "SELECT username, password, role FROM User WHERE username = '$sanitisedUser'";
     $result = $conn->query($query);
 
     if($result && $result->num_rows > 0) {

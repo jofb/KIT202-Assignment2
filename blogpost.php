@@ -5,7 +5,7 @@ require "dbconn.php";
 $title;
 
 //If there is a post id in get, and the user is not a visitor, they can use this page
-if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
+if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
 
     $id = $_GET["post_id"];
 
@@ -13,12 +13,12 @@ if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != 
 
     $result = $conn->query($query);
 
-    if ($result && $result->num_rows > 0) {
+    if($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
         $title = $row["title"];
     } else {
-        header('Location: index.php');
+       header('Location: index.php');
     }
 } else {
     header('Location: index.php');
@@ -43,7 +43,7 @@ if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != 
     <link rel="stylesheet" href="css/navbar.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/style.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/index.css?ts=<?= time() ?>" />
-    <link rel="stylesheet" href="css/comment.css?ts=<?= time() ?> /">
+    <link rel="stylesheet" href="css/comment.css?ts=<?= time()?> /">
 
     <script src="js/navbar.js" defer></script>
 </head>
@@ -55,16 +55,17 @@ if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != 
     ?>
     <main class="blog-posts">
         <?php
+        //First check if the post exists
         $query = "SELECT username,
         title, 
         post_body, 
         post_image,
         archived, 
         DATE_FORMAT(post_date, \"%d %M %Y\") AS 'date'
-        from blogPost WHERE post_id = '$id';";
+        from Blog_Post WHERE post_id = '$id';";
         $result = $conn->query($query);
 
-        if ($result && $result->num_rows > 0) {
+        if($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
             echo "<article class=\"blog-post\">";
@@ -77,15 +78,25 @@ if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != 
             echo "<img class=\"blog-post-image\" src=\"" . $row["post_image"] . "\">";
             echo "</article>";
 
-            echo "<section class=\"comments-wrapper\">";
+            loadComments();
 
+        } else {
+            echo "Something went wrong here!";
+            header('Location: index.php');
+        }
+
+        function loadComments() {
             $query = "SELECT post_id, comment_body, username, DATE_FORMAT(date, \"%d %M %Y\") AS 'date' from Comment WHERE post_id = '$id'";
-
             $result = $conn->query($query);
 
-            if ($result && $result->num_rows > 0) {
-                echo "<textarea class=\"blog-post comment add-comment\" rows=\"3\" placeholder=\"Comment...\"></textarea>";
-                while ($row = $result->fetch_assoc()) {
+            echo "<section class=\"comments-wrapper\">";
+            echo "<form method=\"POST\" action=\"blogpost.php\">";
+            echo "<textarea name=\"comment\" class=\"blog-post comment add-comment\" rows=\"3\" placeholder=\"";
+
+            //TODO fix this if statement
+            if($result && $commentsExist = ($result->num_rows > 0)) {
+                echo "Comment...\"></textarea></form>";
+                while($row = $result->fetch_assoc()) {
                     echo "<article class=\"blog-post comment\">";
                     echo "<div class=\"blog-post-text\">";
                     echo "<h3 style=\"font-weight: 300; \">" . $row["username"] . "</h3>";
@@ -95,12 +106,12 @@ if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != 
                     echo "</article>";
                 }
             } else {
-                echo "<textarea class=\"blog-post comment add-comment\" rows=\"3\" placeholder=\"There are no comments! You should add one\"></textarea>";
+                echo "There are no comments! You should add one\"></textarea></form>";
+            }
+            if($commentsExist) {
+
             }
             echo "</section>";
-        } else {
-            echo "Something went wrong here!";
-            //header('Location: index.php');
         }
         ?>
     </main>

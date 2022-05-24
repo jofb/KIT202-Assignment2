@@ -48,9 +48,9 @@ session_start();
         archived, 
         post_id,
         DATE_FORMAT(post_date, \"%d %M %Y\") AS 'date'
-        from blogPost WHERE archived = \"0\" 
+        from Blog_Post WHERE archived = \"0\" 
         ORDER BY post_date DESC;";
-
+        
         $result = $conn->query($query);
 
         if ($result && $result->num_rows > 0) {
@@ -65,13 +65,13 @@ session_start();
                 //comments button
                 echo "</div>";
                 echo "<section class=\"user-buttons-wrapper\">";
-                if (isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
-                    echo "<button class=\"comments-button\"";
+                if(isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
+                    echo "<button class=\"comments-button\""; 
                     echo "onclick=\"window.location.href = 'blogpost.php?post_id=" . $row["post_id"] . "'\">";
                     echo "Comments";
-                    echo "</button>";
+                    echo "</button>";    
                 }
-                if (isset($_SESSION["username"]) && $_SESSION["username"] == $row["username"]) {
+                if(isset($_SESSION["username"]) && $_SESSION["username"] == $row["username"]) {
                     echo "<button class=\"comments-button edit-button\"";
                     echo "onclick=\"window.location.href = 'create.php?edit=" . $row["post_id"] . "'\">";
                     echo "Edit Post";

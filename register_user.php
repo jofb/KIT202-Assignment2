@@ -18,7 +18,7 @@ $hashedPassword = crypt($sanitisedPass, '$5$shrek');
 //default to member role
 $values = "'$sanitisedUser', '$hashedPassword', 'member', '$sanitisedEmail'";
 
-$query = "INSERT INTO user (username, password, role, email) VALUES ($values);";
+$query = "INSERT INTO User (username, password, role, email) VALUES ($values);";
 
 //Handle same username case
 try {

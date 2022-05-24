@@ -11,7 +11,7 @@ if (isset($_GET["edit"])) {
         title, 
         post_body, 
         post_image
-        from blogPost WHERE post_id = $postToEdit;";
+        from Blog_Post WHERE post_id = $postToEdit;";
     $result = $conn->query($query);
 
     if($result && $result->num_rows > 0) {
@@ -20,7 +20,6 @@ if (isset($_GET["edit"])) {
             $currentBody = $row["post_body"];
             $currentImage = $row["post_image"];
     }
-    echo "<script>updateAll();</script>";
 }
 
 // If page was submitted as an action
@@ -33,7 +32,7 @@ if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
     
     // Editing post
     if (isset($_GET["edit"])) {
-        $editCommand = "UPDATE blogPost SET title='$newTitle', post_body='$newPost', post_image='$newImage' WHERE post_id=$postToEdit;";
+        $editCommand = "UPDATE Blog_Post SET title='$newTitle', post_body='$newPost', post_image='$newImage' WHERE post_id=$postToEdit;";
 
         if ($conn->query($editCommand) === TRUE) {
             header('Location: index.php');
@@ -47,7 +46,7 @@ if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
     }
     // Creating post
     else {
-        $command = "INSERT INTO blogPost (username, title, post_body, post_image)
+        $command = "INSERT INTO Blog_Post (username, title, post_body, post_image)
         VALUES ('$newAuthor', '$newTitle', '$newPost', '$newImage');";
 
         if ($conn->query($command) === TRUE) {
@@ -60,10 +59,6 @@ if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
         $conn->close();
 
     }
-    
-
-
-    
 }
 
 function updateArchivedPosts()
@@ -73,13 +68,13 @@ function updateArchivedPosts()
     $highestTime = 0;
     $toRemove = 0;
 
-    $postQuery = "SELECT post_id, post_date, archived from blogPost where archived = 0 ORDER BY post_date ASC";
+    $postQuery = "SELECT post_id, post_date, archived from Blog_Post where archived = 0 ORDER BY post_date ASC";
     $result = $conn->query($postQuery);
 
     if ($result && $result->num_rows > 1) {
         $row = $result->fetch_assoc();
         $toRemove = $row["post_id"];
-        $updateQuery = "UPDATE blogPost SET archived = 1 WHERE post_id = '$toRemove';";
+        $updateQuery = "UPDATE Blog_Post SET archived = 1 WHERE post_id = '$toRemove';";
         $result = $conn->query($updateQuery);
         if ($result) {
             echo "Updated Blog Posts";
@@ -136,17 +131,18 @@ function updateArchivedPosts()
             <form name="create-form" method="post" action="<?php $_SERVER["PHP_SELF"]; ?>">
                 <label for="post-title">Title (70 characters maximum):</label>
                 <br />
-                <input type="text" id="post-title" name="post-title" <?php if (isset($_GET["edit"])) echo "value=\"$currentTitle\""; ?> maxlength="70" size="40" onchange="updateTitle()" required />
+                <input type="text" id="post-title" name="post-title" <?php if (isset($_GET["edit"])) echo "value=\"$currentTitle\"" ?> maxlength="70" size="40" onchange="updateTitle()" required />
                 <br />
 
                 <label for="post-body">Body:</label>
                 <br />
-                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" onchange="updatePostBody()" required><?php if (isset($_GET["edit"])) echo "$currentBody"; ?></textarea>
+                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" onchange="updatePostBody()" required><?php if (isset($_GET["edit"])) echo "$currentBody" ?>
+                </textarea>
                 <br />
 
                 <label for="post-image">Movie Poster URL:</label>
                 <br />
-                <input type="text" id="post-image" name="post-image" <?php if (isset($_GET["edit"])) echo "value=\"$currentImage\""; ?> maxlength="500" size="60" onchange="updateImage()" />
+                <input type="text" id="post-image" name="post-image" <?php if (isset($_GET["edit"])) echo "value=\"$currentImage\"" ?> maxlength="500" size="60" onchange="updateImage()" />
                 <br />
 
                 <div class="buttons">
@@ -159,7 +155,7 @@ function updateArchivedPosts()
         <article class="post-preview">
             <div class="text-preview">
                 <h2 id="title-preview">
-                This is a preview of your new post
+                    This is a preview of your new post
                 </h2>
                 <h3 id="author-preview">
                     <?php if (isset($_SESSION["username"])) {
@@ -190,11 +186,6 @@ function updateArchivedPosts()
     </main>
 
     <script src="js/create.js"></script>
-    <?php
-    if (isset($_GET["edit"])) {
-        echo "<script>updateAll();</script>";
-    }
-    ?>
 </body>
 
 </html>
