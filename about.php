@@ -89,6 +89,9 @@ session_start();
                 <a href="https://www.imdb.com/title/tt2382320/">
                     No Time to Die Poster
                 </a>
+                <a href="https://www.studiobinder.com/blog/movie-poster-credits-template/">
+                    Generic Movie Posters
+                </a>
                 <h3>Code:</h3>
                 <a href="https://www.30secondsofcode.org/css/s/hover-underline-animation">
                     Hover underline animation
