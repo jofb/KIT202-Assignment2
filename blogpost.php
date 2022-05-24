@@ -24,6 +24,29 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
     header('Location: index.php');
 }
 
+if(isset($_POST["comment"])) {
+    //sort out values
+
+    $id = $_GET["post_id"];
+    $body = $conn->real_escape_string(htmlentities($_POST["comment"]));
+    $user = $_SESSION["username"];
+    //put into query
+
+    $query = "INSERT INTO 
+    Comment (post_id, comment_body, username) 
+    VALUES ('$id', '$body', '$user');";
+
+    $result = $conn->query($query);
+
+    if(!$result) {
+        echo "Something went wrong here!";
+    }
+    //unset post
+    unset($_POST["comment"]);
+    //Reload the page fully to clear POST and stop comment from resubmitting
+    header('Location: blogpost.php?post_id=' . $_GET["post_id"]);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +65,6 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/navbar.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/style.css?ts=<?= time() ?>" />
-    <link rel="stylesheet" href="css/index.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/comment.css?ts=<?= time()?> /">
 
     <script src="js/navbar.js" defer></script>
@@ -92,27 +114,35 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
             $result = $conn->query($query);
 
             echo "<section class=\"comments-wrapper\">";
-            echo "<form method=\"POST\" action=\"blogpost.php\">";
-            echo "<textarea name=\"comment\" class=\"blog-post comment add-comment\" rows=\"3\" placeholder=\"";
+            echo "<form name=\"comment-form\" 
+            method=\"POST\" action=\"" . 
+            htmlspecialchars($_SERVER["PHP_SELF"]) . "?post_id=" . $_GET["post_id"] . "\">";
+            echo "<textarea required minlength=\"10\" maxlength=\"200\" name=\"comment\" class=\"blog-post comment add-comment\" rows=\"2\" cols=\"150\" placeholder=\"";
 
-            //TODO fix this if statement
-            if($result && $commentsExist = ($result->num_rows > 0)) {
-                echo "Comment...\"></textarea></form>";
-                while($row = $result->fetch_assoc()) {
-                    echo "<article class=\"blog-post comment\">";
-                    echo "<div class=\"blog-post-text\">";
-                    echo "<h3 style=\"font-weight: 300; \">" . $row["username"] . "</h3>";
-                    echo "<h3>" . $row["date"] . "</h3>";
-                    echo "<p>" . $row["comment_body"] . "</p>";
-                    echo "</div>";
-                    echo "</article>";
+            if($result) {
+                //If there are comments use normal comment message then print them out
+                if($commentsExist = $result->num_rows > 0) {
+                    echo "Comment...";
+                } else {
+                    //If there are none print this cute message
+                    echo "There are no comments! You should add one...";
                 }
-            } else {
-                echo "There are no comments! You should add one\"></textarea></form>";
+                echo "\"></textarea>";
+                echo "<input value=\"Post Comment\" type=\"submit\" class=\"submit-button\" name=\"submit\"/>";
+                echo "</form>";
+                if($commentsExist) {
+                    while($row = $result->fetch_assoc()) {
+                        echo "<article class=\"blog-post comment\">";
+                        echo "<div class=\"blog-post-text\">";
+                        echo "<h3 style=\"font-weight: 300; \">" . $row["username"] . "</h3>";
+                        echo "<h3>" . $row["date"] . "</h3>";
+                        echo "<p>" . $row["comment_body"] . "</p>";
+                        echo "</div>";
+                        echo "</article>";
+                    }
+                }   
             }
-            if($commentsExist) {
 
-            }
             echo "</section>";
         }
         ?>

@@ -107,15 +107,12 @@ session_start();
             <article class="about-response-item about-response-functionality">
                 <h1>Additional Features Added to the Blog</h1>
                 <p>
-                    <b>Logout button: </b> When a user is logged into an account, the login button is replaced with a logout button, which resets the session
-                    and returns the user to the home page as a fresh visitor. </br>
+                    <b>Logout button: </b> When a user is logged into an account, the login button is replaced with a logout button, which destroys the current session. </br>
                     <b>Images: </b>When creating posts the user can submit an image URL which will be uploaded to the database and attached to the blog 
                     post. </br>
-                    <b>Registration: </b>When a user tries to register with a username that already exists, the website 
-                    will remember the username and email entered via GET, for convenience. </br>
-                    -Commenting (?)
-                    <b>Edit post: </b>Posts can be edited by loading a variation of the 'create post' page and running an UPDATE command instead of INSERT. </br>
-
+                    <b>Edit post: </b>Posts can be edited by loading a variation of the 'create post' page and running an UPDATE command instead of INSERT. Posts can only be edited by their author.</br>
+                    <b>Commenting: </b> Each post now has its own dedicated page where users can add comments that will be stored on the database
+                    . Currently only members and authors can write and view comments. Post IDs are supplied in GET and comments are updated through POST.</br>
                 </p>
             </article>
 
