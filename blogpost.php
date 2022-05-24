@@ -43,6 +43,7 @@ if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != 
     <link rel="stylesheet" href="css/navbar.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/style.css?ts=<?= time() ?>" />
     <link rel="stylesheet" href="css/index.css?ts=<?= time() ?>" />
+    <link rel="stylesheet" href="css/comment.css?ts=<?= time() ?> /">
 
     <script src="js/navbar.js" defer></script>
 </head>
@@ -76,19 +77,27 @@ if (isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != 
             echo "<img class=\"blog-post-image\" src=\"" . $row["post_image"] . "\">";
             echo "</article>";
 
-            $query = "SELECT post_id, comment_body, username, DATE_FORMAT(date, \"%d %M %Y\") AS 'dob' from Comment WHERE post_id = '$id'";
+            echo "<section class=\"comments-wrapper\">";
+
+            $query = "SELECT post_id, comment_body, username, DATE_FORMAT(date, \"%d %M %Y\") AS 'date' from Comment WHERE post_id = '$id'";
 
             $result = $conn->query($query);
 
             if ($result && $result->num_rows > 0) {
-                echo "<article class=\"blog-post\">";
-                echo "<div class=\"blog-post-text\">";
-                echo "<h3 style=\"font-weight: 300; \">" . $row["username"] . "</h3>";
-                echo "<h3>" . $row["date"] . "</h3>";
-                echo "<p>" . $row["post_body"] . "</p>";
-                echo "</div>";
-                echo "</article>";
+                echo "<textarea class=\"blog-post comment add-comment\" rows=\"3\" placeholder=\"Comment...\"></textarea>";
+                while ($row = $result->fetch_assoc()) {
+                    echo "<article class=\"blog-post comment\">";
+                    echo "<div class=\"blog-post-text\">";
+                    echo "<h3 style=\"font-weight: 300; \">" . $row["username"] . "</h3>";
+                    echo "<h3>" . $row["date"] . "</h3>";
+                    echo "<p>" . $row["comment_body"] . "</p>";
+                    echo "</div>";
+                    echo "</article>";
+                }
+            } else {
+                echo "<textarea class=\"blog-post comment add-comment\" rows=\"3\" placeholder=\"There are no comments! You should add one\"></textarea>";
             }
+            echo "</section>";
         } else {
             echo "Something went wrong here!";
             //header('Location: index.php');
