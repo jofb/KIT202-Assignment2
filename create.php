@@ -20,6 +20,7 @@ if (isset($_GET["edit"])) {
             $currentBody = $row["post_body"];
             $currentImage = $row["post_image"];
     }
+    echo "<script>updateAll();</script>";
 }
 
 // If page was submitted as an action
@@ -135,17 +136,17 @@ function updateArchivedPosts()
             <form name="create-form" method="post" action="<?php $_SERVER["PHP_SELF"]; ?>">
                 <label for="post-title">Title (70 characters maximum):</label>
                 <br />
-                <input type="text" id="post-title" name="post-title" <?php if (isset($_GET["edit"])) echo "value=\"$currentTitle\"" ?> maxlength="70" size="40" onchange="updateTitle()" required />
+                <input type="text" id="post-title" name="post-title" <?php if (isset($_GET["edit"])) echo "value=\"$currentTitle\""; ?> maxlength="70" size="40" onchange="updateTitle()" required />
                 <br />
 
                 <label for="post-body">Body:</label>
                 <br />
-                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" onchange="updatePostBody()" required><?php if (isset($_GET["edit"])) echo "$currentBody" ?></textarea>
+                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" onchange="updatePostBody()" required><?php if (isset($_GET["edit"])) echo "$currentBody"; ?></textarea>
                 <br />
 
                 <label for="post-image">Movie Poster URL:</label>
                 <br />
-                <input type="text" id="post-image" name="post-image" <?php if (isset($_GET["edit"])) echo "value=\"$currentImage\"" ?> maxlength="500" size="60" onchange="updateImage()" />
+                <input type="text" id="post-image" name="post-image" <?php if (isset($_GET["edit"])) echo "value=\"$currentImage\""; ?> maxlength="500" size="60" onchange="updateImage()" />
                 <br />
 
                 <div class="buttons">
@@ -158,7 +159,7 @@ function updateArchivedPosts()
         <article class="post-preview">
             <div class="text-preview">
                 <h2 id="title-preview">
-                    This is a preview of your new post
+                This is a preview of your new post
                 </h2>
                 <h3 id="author-preview">
                     <?php if (isset($_SESSION["username"])) {
@@ -189,6 +190,11 @@ function updateArchivedPosts()
     </main>
 
     <script src="js/create.js"></script>
+    <?php
+    if (isset($_GET["edit"])) {
+        echo "<script>updateAll();</script>";
+    }
+    ?>
 </body>
 
 </html>

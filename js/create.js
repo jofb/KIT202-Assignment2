@@ -36,3 +36,10 @@ function updateImage() {
 }
 
 updateDate();
+
+function updateAll() {
+    updateTitle();
+    updatePostBody();
+    updateDate();
+    updateImage();
+}

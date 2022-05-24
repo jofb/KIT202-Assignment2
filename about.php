@@ -34,15 +34,15 @@ session_start();
                 <h1>Home Page Changes.</h1>
                 <p>
                     -got rid of each individual post and replaced it with a for loop that loops through all blog
-                    posts in the database that have the archived tag flagged false
+                    posts in the database that have the archived tag flagged false </br>
                     -then we simply echo'ed out the appropriate html, replacing it with the database data as neccessary.
                 </p>
             </article>
             <article class="about-response-item about-response-password">
                 <h1>HTTP Methods Chosen For Login/Registration</h1>
                 <p>
-                    -for both login and registration we used post. 
-                    -did not want the password from the form visible in the URL so GET is not appropriate here.
+                    -for both login and registration we used post. </br>
+                    -did not want the password from the form visible in the URL so GET is not appropriate here.</br>
                     -however did use GET when an invalid registration is performed, so that the script can retrieve the email and 
                     username entered from the user. This makes it more convenient for the user if they enter an invalid username (one that
                     is already taken.)
@@ -52,11 +52,11 @@ session_start();
                 <h1>User Roles</h1>
                 <p>
                     -there are 2 main roles on the website: member and author. When the session is not logged in, the user is
-                    considered a visitor. 
-                    -when a user logs in we set the session role variable to their appropriate role.
+                    considered a visitor. </br>
+                    -when a user logs in we set the session role variable to their appropriate role. </br>
                     -At the start of every php script is a check to see if the user is allowed onto that page given their current 
-                    sessions role. if they aren't, they are returned to the home page
-                    -this prevents users from accessing pages they should not be able to
+                    sessions role. if they aren't, they are returned to the home page </br>
+                    -this prevents users from accessing pages they should not be able to </br>
                 </p>
             </article>
             <!-- References -->
@@ -114,7 +114,7 @@ session_start();
                     <b>Registration: </b>When a user tries to register with a username that already exists, the website 
                     will remember the username and email entered via GET, for convenience. </br>
                     -Commenting (?)
-                    -Liking (?)
+                    <b>Edit post: </b>Posts can be edited by loading a variation of the 'create post' page and running an UPDATE command instead of INSERT. </br>
 
                 </p>
             </article>
