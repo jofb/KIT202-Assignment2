@@ -140,8 +140,7 @@ function updateArchivedPosts()
 
                 <label for="post-body">Body:</label>
                 <br />
-                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" onchange="updatePostBody()" required><?php if (isset($_GET["edit"])) echo "$currentBody" ?>
-                </textarea>
+                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" onchange="updatePostBody()" required><?php if (isset($_GET["edit"])) echo "$currentBody" ?></textarea>
                 <br />
 
                 <label for="post-image">Movie Poster URL:</label>
