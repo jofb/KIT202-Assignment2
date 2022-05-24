@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
+if (isset($_POST["post-title"]) && isset($_POST["post-body"])) {
     require "dbconn.php";
 
     $newTitle = htmlspecialchars($_POST["post-title"]);
     $newAuthor = $_SESSION["username"];
-    $newPost = htmlspecialchars($_POST["post-body"]);
+    $newPost = htmlentities($_POST["post-body"]);
 
     $command = "INSERT INTO blogPost (username, title, post_body)
         VALUES ('$newAuthor', '$newTitle', '$newPost');";
@@ -19,7 +19,6 @@ if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
     }
 
     $conn->close();
-
 }
 
 function updateArchivedPosts()
