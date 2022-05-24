@@ -9,7 +9,7 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
 
     $id = $_GET["post_id"];
 
-    $query = "SELECT title, archived, post_id from blogPost WHERE post_id = '$id' AND archived='0';";
+    $query = "SELECT title, archived, post_id from Blog_Post WHERE post_id = '$id' AND archived='0';";
 
     $result = $conn->query($query);
 
@@ -86,6 +86,8 @@ if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "
         }
 
         function loadComments() {
+            global $conn;
+            global $id;
             $query = "SELECT post_id, comment_body, username, DATE_FORMAT(date, \"%d %M %Y\") AS 'date' from Comment WHERE post_id = '$id'";
             $result = $conn->query($query);
 
