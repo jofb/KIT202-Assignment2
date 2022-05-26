@@ -1,8 +1,13 @@
 <?php
 session_start();
+
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != "Author") {
+    header('Location: index.php');
+}
+
 require "dbconn.php"; 
 
-// If loading "Edit Post"
+// If user is editing a post rather than creating one, change the forms contents to match the post
 if (isset($_GET["edit"])) {
 	   
 	$postToEdit = $_GET["edit"];
@@ -10,46 +15,67 @@ if (isset($_GET["edit"])) {
     $query = "SELECT 
         title, 
         post_body, 
-        post_image
+        post_image,
+        username
         from Blog_Post WHERE post_id = $postToEdit;";
+
     $result = $conn->query($query);
 
+    //If there is a matching post, update the forms contents
     if($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
+
+            if($row["username"] != $_SESSION["username"]) {
+                //Have to be the author of the post!
+                header('Location: index.php');
+            }
             $currentTitle = $row["title"];
             $currentBody = $row["post_body"];
             $currentImage = $row["post_image"];
     }
 }
 
-// If page was submitted as an action
+//If the form was submitted, process the POST contents
 if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
 
-    $newTitle = htmlentities($_POST["post-title"]);
+    //Sanitising input
+    $newTitle = $conn->real_escape_string(htmlentities($_POST["post-title"]));
     $newAuthor = $_SESSION["username"];
-    $newPost = htmlentities($_POST["post-body"]);
-    if (isset($_POST["post-image"])) $newImage = $_POST["post-image"];
-    
-    // Editing post
-    if (isset($_GET["edit"])) {
-        $editCommand = "UPDATE Blog_Post SET title='$newTitle', post_body='$newPost', post_image='$newImage' WHERE post_id=$postToEdit;";
+    $newPost = $conn->real_escape_string(htmlentities($_POST["post-body"]));
 
-        if ($conn->query($editCommand) === TRUE) {
+    //default image
+    $newImage = "https://s.studiobinder.com/wp-content/uploads/2019/06/Movie-Poster-Template-Movie-Credits-StudioBinder.jpg";
+
+    //Image is optional!
+    if (isset($_POST["post-image"]) && $_POST["post-image"] != "") 
+        $newImage = $_POST["post-image"];
+    
+    //If we're editing the post, use an update query 
+    if (isset($_GET["edit"])) {
+        $editCommand = "UPDATE Blog_Post SET title='$newTitle', 
+        post_body='$newPost', post_image='$newImage' 
+        WHERE post_id=$postToEdit;";
+
+        $result = $conn->query($editCommand);
+
+        if ($result) {
             header('Location: index.php');
-            //header('Location: blogpost.php&post_id=$postToEdit');
         } else {
             echo "Error: " . $command . "<br>" . $conn->error;
         }
     
         $conn->close();
-
     }
-    // Creating post
+    //Else, create a new post with INSERT query
     else {
+
         $command = "INSERT INTO Blog_Post (username, title, post_body, post_image)
         VALUES ('$newAuthor', '$newTitle', '$newPost', '$newImage');";
 
-        if ($conn->query($command) === TRUE) {
+        $result = $conn->query($command);
+
+        if ($result) {
+            //Update archived posts with the oldest one
             updateArchivedPosts();
             header('Location: index.php');
         } else {
@@ -57,24 +83,26 @@ if(isset($_POST["post-title"]) && isset($_POST["post-body"])) {
         }
     
         $conn->close();
-
     }
 }
 
+//Removes the oldest post from index.php and flags it as archived
 function updateArchivedPosts()
 {
     global $conn;
 
-    $highestTime = 0;
-    $toRemove = 0;
-
-    $postQuery = "SELECT post_id, post_date, archived from Blog_Post where archived = 0 ORDER BY post_date ASC";
+    //Select all posts that aren't archived, sorted by date
+    $postQuery = "SELECT post_id, post_date, archived FROM Blog_Post WHERE archived = 0 ORDER BY post_date ASC";
     $result = $conn->query($postQuery);
 
-    if ($result && $result->num_rows > 1) {
+    //If there are more than 4 posts that aren't archived, update the oldest one (the first in the list)
+    if ($result && $result->num_rows > 4) {
+
         $row = $result->fetch_assoc();
         $toRemove = $row["post_id"];
+
         $updateQuery = "UPDATE Blog_Post SET archived = 1 WHERE post_id = '$toRemove';";
+
         $result = $conn->query($updateQuery);
         if ($result) {
             echo "Updated Blog Posts";
@@ -93,7 +121,7 @@ function updateArchivedPosts()
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Post</title>
+    <title><?php if(isset($_GET["edit"])) echo "Edit"; else echo "Create"; ?> Post</title>
     <!-- Font load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -111,20 +139,16 @@ function updateArchivedPosts()
 <body>
     <?php
     require "navbar.php";
-
-    if (!isset($_SESSION["role"]) || $_SESSION["role"] != "Author") {
-        header('Location: index.php');
-    }
     ?>
     <main>
         <article class="post-creation">
             <h1><?php 
             
             if (isset($_GET["edit"])) {
-                echo "Edit post";
+                echo "Edit Post";
             }
             else {
-                echo "Create post";
+                echo "Create Post";
             }
 
             ?></h1>
@@ -136,13 +160,21 @@ function updateArchivedPosts()
 
                 <label for="post-body">Body:</label>
                 <br />
-                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" onchange="updatePostBody()" required><?php if (isset($_GET["edit"])) echo "$currentBody" ?>
-                </textarea>
+                <textarea class="post-body" id="post-body" name="post-body" rows="15" cols="100" 
+                onchange="updatePostBody()" required><?php 
+                if (isset($_GET["edit"])) 
+                    echo "$currentBody"; 
+                ?></textarea>
                 <br />
 
                 <label for="post-image">Movie Poster URL:</label>
                 <br />
-                <input type="text" id="post-image" name="post-image" <?php if (isset($_GET["edit"])) echo "value=\"$currentImage\"" ?> maxlength="500" size="60" onchange="updateImage()" />
+                <input type="text" id="post-image" name="post-image" 
+                <?php
+                if (isset($_GET["edit"])) 
+                    echo "value=\"$currentImage\"" 
+                ?> 
+                maxlength="500" size="60" onchange="updateImage()" />
                 <br />
 
                 <div class="buttons">
@@ -186,6 +218,11 @@ function updateArchivedPosts()
     </main>
 
     <script src="js/create.js"></script>
+    <?php
+    if(isset($_GET["edit"])) {
+        echo "<script> updateAll(); </script>";
+    }
+    ?>
 </body>
 
 </html>
