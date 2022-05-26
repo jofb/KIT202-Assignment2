@@ -5,6 +5,8 @@ require "dbconn.php";
 
 $invalidLogin = false;
 $invalidRegister = false;
+
+//Same username case, set invalid register to true for error message
 if(isset($_GET["invalid"])) {
     $invalidRegister = true;
 }
@@ -23,6 +25,8 @@ if(isset($_POST["username"]) && isset($_POST["password"])) {
     }
 }
 
+//Authenticates user and password against database after sanitisation
+//Returns false when username or password don't match
 function authenticate($user, $pass) {
     global $conn;
 
@@ -76,11 +80,7 @@ function authenticate($user, $pass) {
         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="login-form" name="register-login-form" novalidate>
             <h1 class="form-title">Login</h1>
             <!-- Register email -->
-            <input type="email" name="email" id="email" placeholder="Email" hidden value="<?php 
-                if(isset($_GET["email"])) { 
-                    echo $_GET["email"]; 
-                } 
-            ?>" />
+            <input type="email" name="email" id="email" placeholder="Email" hidden />
             <input type="text" name="username" id="username" placeholder="Username" />
             <input type="password" name="password" id="password" placeholder="Password" />
             <!-- Register confirm passwrod -->
@@ -95,6 +95,7 @@ function authenticate($user, $pass) {
             <!-- Error message -->
             <p class="error-message" style="color: red">
                 <?php
+                //Invalid login error message
                 if($invalidLogin) {
                     echo "Username or Password is invalid";
                 }
@@ -117,6 +118,7 @@ function authenticate($user, $pass) {
         if($invalidRegister) {
             $user = $_GET["user"];
             $email = $_GET["email"];
+            //Updating form via javascript
             echo "
             <script> 
             registerButtonChange(); 

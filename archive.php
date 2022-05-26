@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+//Visitors cannot use this page
+if (!isset($_SESSION["role"]) || $_SESSION["role"] == "Visitor") {
+    header('Location: index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,21 +32,17 @@ session_start();
 <body>
     <?php
     require "navbar.php";
-    require "dbconn.php";
-
-    if (!isset($_SESSION["role"]) || $_SESSION["role"] == "Visitor") {
-        header('Location: index.php');
-    }
     ?>
     <main class="archive-posts">
 
         <?php
+        require "dbconn.php";
+
+        //Select all posts that are archived
         $query = "SELECT title, archived,
-    DATE_FORMAT(post_date, \"%d %M %Y\") AS 'DOB'
-    from Blog_Post WHERE archived = \"1\"
-    ORDER BY post_date DESC;";
-
-
+        DATE_FORMAT(post_date, \"%d %M %Y\") AS 'date'
+        from Blog_Post WHERE archived = \"1\"
+        ORDER BY post_date DESC;";
 
         $result = $conn->query($query);
 
@@ -49,13 +50,11 @@ session_start();
             while ($row = $result->fetch_assoc()) {
                 echo "<article class=\"archive-post\">";
                 echo "<h2>" . $row["title"] . "</h2>";
-                echo "<h3>" . $row["DOB"] . "</h3>";
+                echo "<h3>" . $row["date"] . "</h3>";
                 echo "</article>";
             }
         }
         ?>
-
     </main>
 </body>
-
 </html>

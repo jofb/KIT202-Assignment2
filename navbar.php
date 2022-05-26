@@ -6,8 +6,8 @@ echo "</div>";
 echo "<nav class=\"navbar\">";
 
 echo "<h3 class=\"navbar-username-container\">";
+//Display users username at the top
 if (isset($_SESSION["username"])) {
-    //echo $_SESSION["username"];
     echo "Logged in as <span class=\"navbar-username\">" . $_SESSION["username"] . "</span>";
 }
 echo "</h3>";

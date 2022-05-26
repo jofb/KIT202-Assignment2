@@ -1,9 +1,12 @@
 <?php
+//Page for handling registering a user
 
 session_start();
 
 require "dbconn.php";
 
+
+//Sanitise all inputs
 $email = htmlspecialchars($_POST["email"]);
 $username = htmlspecialchars($_POST["username"]);
 $password = htmlspecialchars($_POST["password"]);
@@ -12,10 +15,10 @@ $sanitisedEmail = $conn->real_escape_string($email);
 $sanitisedUser = $conn->real_escape_string($username);
 $sanitisedPass = $conn->real_escape_string($password);
 
-
+//Hash the password
 $hashedPassword = crypt($sanitisedPass, '$5$shrek');
 
-//default to member role
+//Default to member role
 $values = "'$sanitisedUser', '$hashedPassword', 'member', '$sanitisedEmail'";
 
 $query = "INSERT INTO User (username, password, role, email) VALUES ($values);";
@@ -30,9 +33,6 @@ try {
         header('Location: index.php');
     }
 } catch(mysqli_sql_exception $e) {
-    //23000 is the sql error code for same primary key
-    if($e->getSqlState() == "23000") {
-        //$invalidRegister = true;
-        header('Location: login.php?invalid&user=' . $sanitisedUser . "&email=" . $sanitisedEmail);
-    }
+    //Default behaviour against any MySQL Exception, return back to login
+    header('Location: login.php?invalid&user=' . $sanitisedUser . "&email=" . $sanitisedEmail);
 }
