@@ -33,30 +33,30 @@ session_start();
             <article class="about-response-item about-response-theme">
                 <h1>Home Page Changes.</h1>
                 <p>
-                    -got rid of each individual post and replaced it with a for loop that loops through all blog
-                    posts in the database that have the archived tag flagged false </br>
-                    -then we simply echo'ed out the appropriate html, replacing it with the database data as neccessary.
+                    Gone are all the placeholder posts, as the age of php is upon us. In place of all of the repetitive
+                    HTML is a for loop that loops through all of the blog posts in the database which are not flagged
+                    as archived. We echo out the appropriate HTML, adding in the database data as needed.
                 </p>
             </article>
             <article class="about-response-item about-response-password">
                 <h1>HTTP Methods Chosen For Login/Registration</h1>
                 <p>
-                    -for both login and registration we used post. </br>
-                    -did not want the password from the form visible in the URL so GET is not appropriate here.</br>
-                    -however did use GET when an invalid registration is performed, so that the script can retrieve the email and 
-                    username entered from the user. This makes it more convenient for the user if they enter an invalid username (one that
-                    is already taken.)
+                    For both login and registration we used the POST method. This was chosen as we did not want the submitted data
+                    shown in the GET request. GET is a lot less secure than POST and is better for things like post IDs or usernames.
+                    It is not suited for passwords. However, we do use GET to relay an invalid registration back to the client, that request
+                    contains the username and email that the user may have tried to register with. This way, we can fill the form back in 
+                    so that the user doesn't have to enter them again on an invalid registration. 
                 </p>
             </article>
             <article class="about-response-item about-response-registration">
                 <h1>User Roles</h1>
                 <p>
-                    -there are 2 main roles on the website: member and author. When the session is not logged in, the user is
-                    considered a visitor. </br>
-                    -when a user logs in we set the session role variable to their appropriate role. </br>
-                    -At the start of every php script is a check to see if the user is allowed onto that page given their current 
-                    sessions role. if they aren't, they are returned to the home page </br>
-                    -this prevents users from accessing pages they should not be able to </br>
+                    There are 2 roles on the website: Member and Author. When the user is not logged into an account they are
+                    considered a Visitor. When a user logs in we set the session role variable to their appropriate role. </br>
+                    At the start of every page is a check to see if the user is allowed to access that page given their current sessions role.
+                    If they aren't, they are returned to the home page. </br>
+                    Currently everyone can view the 'Home', 'About', 'Comments' and 'Login' pages. Members and Authors can access the archive and
+                    write comments. However only Authors can create and edit posts.
                 </p>
             </article>
             <!-- References -->
@@ -107,12 +107,12 @@ session_start();
             <article class="about-response-item about-response-functionality">
                 <h1>Additional Features Added to the Blog</h1>
                 <p>
-                    <b>Logout button: </b> When a user is logged into an account, the login button is replaced with a logout button, which destroys the current session. </br>
                     <b>Images: </b>When creating posts the user can submit an image URL which will be uploaded to the database and attached to the blog 
                     post. </br>
-                    <b>Edit post: </b>Posts can be edited by loading a variation of the 'create post' page and running an UPDATE command instead of INSERT. Posts can only be edited by their author.</br>
+                    <b>Edit post: </b>Posts can be edited by loading a variation of the 'create post' page and running an UPDATE command instead of INSERT. The Post ID is supplied through GET. Posts can only be edited by their author.</br>
                     <b>Commenting: </b> Each post now has its own dedicated page where users can add comments that will be stored on the database
                     . Anyone can view comments, however only members and authors can write them. Post IDs are supplied in GET and comments are updated through POST.</br>
+                    <b>Additionally</b>, new buttons have been added to the posts on the Home page, which lead to Comments and Edit Post (if the user is the author of that post).
                 </p>
             </article>
 
