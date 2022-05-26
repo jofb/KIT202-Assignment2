@@ -112,7 +112,7 @@ session_start();
                     post. </br>
                     <b>Edit post: </b>Posts can be edited by loading a variation of the 'create post' page and running an UPDATE command instead of INSERT. Posts can only be edited by their author.</br>
                     <b>Commenting: </b> Each post now has its own dedicated page where users can add comments that will be stored on the database
-                    . Currently only members and authors can write and view comments. Post IDs are supplied in GET and comments are updated through POST.</br>
+                    . Anyone can view comments, however only members and authors can write them. Post IDs are supplied in GET and comments are updated through POST.</br>
                 </p>
             </article>
 

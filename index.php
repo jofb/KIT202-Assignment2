@@ -65,12 +65,10 @@ session_start();
                 //comments button
                 echo "</div>";
                 echo "<section class=\"user-buttons-wrapper\">";
-                if(isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
-                    echo "<button class=\"comments-button\""; 
-                    echo "onclick=\"window.location.href = 'blogpost.php?post_id=" . $row["post_id"] . "'\">";
-                    echo "Comments";
-                    echo "</button>";    
-                }
+                echo "<button class=\"comments-button\""; 
+                echo "onclick=\"window.location.href = 'blogpost.php?post_id=" . $row["post_id"] . "'\">";
+                echo "Comments";
+                echo "</button>";    
                 if(isset($_SESSION["username"]) && $_SESSION["username"] == $row["username"]) {
                     echo "<button class=\"comments-button edit-button\"";
                     echo "onclick=\"window.location.href = 'create.php?edit=" . $row["post_id"] . "'\">";

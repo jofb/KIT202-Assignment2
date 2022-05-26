@@ -5,7 +5,7 @@ require "dbconn.php";
 $title;
 
 //If there is a post id in get, and the user is not a visitor, they can use this page
-if(isset($_GET["post_id"]) && isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
+if(isset($_GET["post_id"])) {
 
     $id = $_GET["post_id"];
 
@@ -114,22 +114,28 @@ if(isset($_POST["comment"])) {
             $result = $conn->query($query);
 
             echo "<section class=\"comments-wrapper\">";
-            echo "<form name=\"comment-form\" 
-            method=\"POST\" action=\"" . 
-            htmlspecialchars($_SERVER["PHP_SELF"]) . "?post_id=" . $_GET["post_id"] . "\">";
-            echo "<textarea required minlength=\"10\" maxlength=\"200\" name=\"comment\" class=\"blog-post comment add-comment\" rows=\"2\" cols=\"150\" placeholder=\"";
 
             if($result) {
-                //If there are comments use normal comment message then print them out
-                if($commentsExist = $result->num_rows > 0) {
-                    echo "Comment...";
-                } else {
-                    //If there are none print this cute message
-                    echo "There are no comments! You should add one...";
+                $commentsExist = $result->num_rows > 0;
+                //Hide Comment form if the user is a visitor
+                if(isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
+                    echo "<form name=\"comment-form\" 
+                    method=\"POST\" action=\"" . 
+                    htmlspecialchars($_SERVER["PHP_SELF"]) . "?post_id=" . $_GET["post_id"] . "\">";
+                    echo "<textarea required minlength=\"10\" maxlength=\"200\" name=\"comment\" class=\"blog-post comment add-comment\" rows=\"2\" cols=\"150\" placeholder=\"";
+
+                    //If there are comments use normal comment message then print them out
+                    if($commentsExist) {
+                        echo "Comment...";
+                    } else {
+                        //If there are none print this cute message
+                        echo "There are no comments! You should add one...";
+                    }
+                    echo "\"></textarea>";
+                    echo "<input value=\"Post Comment\" type=\"submit\" class=\"submit-button\" name=\"submit\"/>";
+                    echo "</form>";
                 }
-                echo "\"></textarea>";
-                echo "<input value=\"Post Comment\" type=\"submit\" class=\"submit-button\" name=\"submit\"/>";
-                echo "</form>";
+
                 if($commentsExist) {
                     while($row = $result->fetch_assoc()) {
                         echo "<article class=\"blog-post comment\">";
