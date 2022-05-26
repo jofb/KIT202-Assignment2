@@ -4,33 +4,40 @@ require "dbconn.php";
 
 $title;
 
-//If there is a post id in get, and the user is not a visitor, they can use this page
+//Exit page by default, unless there is a post to load
+$exitPage = true;
+
+//If there is a post id in get then load the page
 if(isset($_GET["post_id"])) {
 
     $id = $_GET["post_id"];
 
-    $query = "SELECT title, archived, post_id from Blog_Post WHERE post_id = '$id' AND archived='0';";
+    $query = "SELECT title from Blog_Post WHERE post_id = '$id' AND archived='0';";
 
     $result = $conn->query($query);
 
+    //If there is a post, then set the page title to that posts title, and don't exit the page
     if($result && $result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
         $title = $row["title"];
-    } else {
-       header('Location: index.php');
+
+        $exitPage = false;
     }
-} else {
+} 
+//If there was no post to load, back home we go!
+if($exitPage) {
     header('Location: index.php');
 }
 
+//Comment Handling
+//If there is a comment in POST, load it and upload to database
 if(isset($_POST["comment"])) {
-    //sort out values
 
+    //Grabbing post id from GET, comment from POST, and username from SESSION, round the world!
     $id = $_GET["post_id"];
     $body = $conn->real_escape_string(htmlentities($_POST["comment"]));
     $user = $_SESSION["username"];
-    //put into query
 
     $query = "INSERT INTO 
     Comment (post_id, comment_body, username) 
@@ -39,9 +46,9 @@ if(isset($_POST["comment"])) {
     $result = $conn->query($query);
 
     if(!$result) {
-        echo "Something went wrong here!";
+        echo "Something went wrong here! Couldn't upload comment";
     }
-    //unset post
+    //Unset POST
     unset($_POST["comment"]);
     //Reload the page fully to clear POST and stop comment from resubmitting
     header('Location: blogpost.php?post_id=' . $_GET["post_id"]);
@@ -55,7 +62,7 @@ if(isset($_POST["comment"])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo $title; ?></title>
+    <title><?php echo $title; ?> - Comments</title>
     <!-- Font load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -87,7 +94,9 @@ if(isset($_POST["comment"])) {
         from Blog_Post WHERE post_id = '$id';";
         $result = $conn->query($query);
 
+        //If the post exists, print out in the same format as index.php
         if($result && $result->num_rows > 0) {
+
             $row = $result->fetch_assoc();
 
             echo "<article class=\"blog-post\">";
@@ -100,25 +109,35 @@ if(isset($_POST["comment"])) {
             echo "<img class=\"blog-post-image\" src=\"" . $row["post_image"] . "\">";
             echo "</article>";
 
+            //Once the post has been printed out, load all the comments in
             loadComments();
 
         } else {
+            //Otherwise return to index.php
             echo "Something went wrong here!";
             header('Location: index.php');
         }
 
+
+        //Loads comments in and prints them out if they exist, creates comment form
         function loadComments() {
             global $conn;
             global $id;
-            $query = "SELECT post_id, comment_body, username, DATE_FORMAT(date, \"%d %M %Y\") AS 'date' from Comment WHERE post_id = '$id'";
-            $result = $conn->query($query);
 
+            $query = "SELECT post_id, comment_body, username, 
+            DATE_FORMAT(date, \"%d %M %Y\") AS 'date' 
+            FROM Comment WHERE post_id = '$id'";
+
+            $result = $conn->query($query);
+            //This is for the styling/formatting
             echo "<section class=\"comments-wrapper\">";
 
             if($result) {
+                //If there are comments we want to display a different message in the form
                 $commentsExist = $result->num_rows > 0;
                 //Hide Comment form if the user is a visitor
                 if(isset($_SESSION["role"]) && $_SESSION["role"] != "Visitor") {
+                    //Create comment form with appropriate html
                     echo "<form name=\"comment-form\" 
                     method=\"POST\" action=\"" . 
                     htmlspecialchars($_SERVER["PHP_SELF"]) . "?post_id=" . $_GET["post_id"] . "\">";
@@ -131,11 +150,13 @@ if(isset($_POST["comment"])) {
                         //If there are none print this cute message
                         echo "There are no comments! You should add one...";
                     }
+
                     echo "\"></textarea>";
                     echo "<input value=\"Post Comment\" type=\"submit\" class=\"submit-button\" name=\"submit\"/>";
                     echo "</form>";
                 }
 
+                //If Comments exist loop through the results and print them out in similar formatting to the post
                 if($commentsExist) {
                     while($row = $result->fetch_assoc()) {
                         echo "<article class=\"blog-post comment\">";
@@ -148,7 +169,6 @@ if(isset($_POST["comment"])) {
                     }
                 }   
             }
-
             echo "</section>";
         }
         ?>
